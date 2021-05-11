@@ -1,0 +1,17 @@
+﻿@model List<MessageGetAllModel>
+@{
+    ViewData["Title"] = "Gönderilen Mesajlar";
+}
+
+@section navbar{
+    <partial name="_usernavbar" />
+}
+
+
+@foreach (var item in Model)
+{
+    <partial name="_send" model="item" />
+
+}
+
+

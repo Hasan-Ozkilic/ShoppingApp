@@ -1,0 +1,84 @@
+﻿@model List<BasketListele>
+
+@{
+    ViewData["Title"] = "Listele";
+}
+
+<h1 style="color:red;">Sepetim</h1>
+
+<div class="row mt-5">
+    <div class="col-md-8">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Ürün Resmi</th>
+                    <th>Product Name</th>
+                    <th>Price</th>
+         
+                    <th>İptal Et</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <img src="~/img/@item.Products.ImageUrl" width="80" />
+                        </td>
+                        <td>@item.Products.ProductName</td>
+                        <td>@item.Products.ProductPrice</td>
+                      
+                        
+                        <td>
+                            <a class="btn btn-danger btn-sm" style="color:white;" asp-controller="Basket" asp-action="Delete" asp-route-id="@item.BasketId">
+                                <i class="fa fa-times fa-fw"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+    <div class="col-md-4">
+
+       @{ 
+           int toplam = 0;
+       }
+        
+            <div class="text-left">
+                <h4>Cart Summary</h4>
+            </div>
+            <table class="table">
+                <tbody>
+                    <tr>
+
+                        <th>Ürün Toplam</th>
+                        @foreach (var item in Model)
+                        {
+                            toplam += item.Products.ProductPrice;
+                        }
+                        <td>@toplam.ToString("c")</td>
+                    </tr>
+                    <tr>
+                        <th>Shipping</th>
+                        <td>Free</td>
+                    </tr>
+                    <tr>
+                        <th>Toplam</th>
+                        <td>@toplam.ToString("c")</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <a asp-action="GetAll" asp-controller="Product" class="btn btn-primary">
+                    <i class="fa fa-arrow-circle-left fa-fw"></i> Alışverişe Devam Et
+                </a>
+                <a asp-action="Odeme" asp-controller="Basket"  class="btn btn-primary">
+                    Ödeme <i class="fa fa-arrow-circle-right fa-fw"></i>
+                </a>
+            </div>
+
+        
+    </div>
+</div>

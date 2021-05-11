@@ -1,0 +1,38 @@
+﻿@model Product
+
+@*<style>
+    h4 {
+        color: red;
+    }
+</style>*@
+<div class="col-md-4 mb-4">
+    <div class="card phone-box">
+
+        <div class="card-header">
+            <h1 class="display-4">@Model.ProductName</h1>
+        </div>
+
+
+        <div class="card-body">
+           
+            <img src="~/img/@Model.ImageUrl" alt="Alternate Text" width="200" height="200" />
+
+            <h4 class=" ml-1" style="display:inline-block"> @Model.ProductPrice<i class="fa fa-lira-sign"></i></h4>
+
+        </div>
+
+
+        <div class="card-footer " style="text-align:center">
+            @*<p>@Model.Description</p>*@
+            <div style="text-align:center;">
+                <a class="btn btn-danger text-light mr-4" asp-action="Delete" asp-controller="Product" asp-route-id="@Model.Id">Ürünü Sil</a>
+                <a class="btn btn-primary text-light"  asp-action="Update" asp-controller="Product" asp-route-id="@Model.Id">Ürünü Güncelle</a>
+            </div>
+           
+        </div>
+
+    </div>
+    </div>
+
+
+

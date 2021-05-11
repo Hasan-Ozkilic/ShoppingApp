@@ -1,0 +1,22 @@
+﻿
+@foreach (var item in Model)
+{
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="display-4">@item.LaptopName</h1>
+            </div>
+            <div class="card-body">
+
+                <img src="~/img/PC/@item.ImageUrl" alt="Alternate Text" width="200" height="200" />
+                <h1 class="display-4 ml-2" style="display:inline-block"> @item.LaptopPrice<i class="fa fa-lira-sign"></i></h1>
+            </div>
+
+            <div class="card-footer">
+                <button class="btn btn-primary">Details</button>
+                <button class="btn btn-danger ml-2">Add To Cart</button>
+            </div>
+        </div>
+    </div>
+}

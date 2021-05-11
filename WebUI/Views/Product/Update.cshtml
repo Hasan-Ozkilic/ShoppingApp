@@ -1,0 +1,79 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Update";
+}
+
+@section navbar{
+    <partial name="_usernavbar" />
+}
+
+<h1>Update</h1>
+
+@*<h1>Profile</h1>*@
+<div class="container-fluid">
+    @*<h3 style="color:blue;font-weight:bold;">Merhaba @Model.UserName</h3> Kazanmaya Hemen Başlayın*@
+    <div class="row">
+
+        <div class="col-md-6">
+            <h6 class="display-4" style="color:red;">Ürün Ekle</h6>
+            <form asp-controller="Product" asp-action="Update" method="post" enctype="multipart/form-data">
+                @*Kullanıcı Id : <select asp-for="@Model.ProductInfo.UserId">
+            <option value="@Model.Id">@Model.Id</option>
+        </select>*@
+
+                <label for="ProductName">Ürün İsmi Gir</label>
+                <input type="text" asp-for="@Model.ProductName" placeholder="Ürün ismi" class="form-control" />
+                <br />
+
+
+
+                <label for="file">Ürünün fotoğrafı gir</label>
+                <input type="file" name="formFile" id="file" class="form-control" />
+                <br />
+
+
+
+
+
+
+
+
+                <label for="CategoryId"> Hangi Kategoride ? </label>
+                <select asp-for="@Model.CategoryId" class="form-control">
+                    <option value="1">Bilgisayar</option>
+                    <option value="2">Telefon</option>
+                    <option value="3">Giyim</option>
+                    <option value="4">Yiyecek</option>
+                </select>
+                <br />
+
+
+                <label for="ProductPrice">Ürün Fiyatı</label>
+                <input type="number" asp-for="@Model.ProductPrice" class="form-control" />
+                <br />
+
+
+
+                <label for="UnitsInStock">Ürün Adedi ? </label>
+                <input type="number" asp-for="@Model.UnitsInStock"  class="form-control" />
+                <br />
+
+
+                <label for="Description">Açıklama</label>
+                <textarea asp-for="@Model.Description" class="form-control"></textarea>
+
+                <br />
+                <button class="btn btn-success">ürün Ekle</button>
+            </form>
+
+        </div>
+        @*<div class="col-md-6">
+            <h6 class="display-4" style="color:red;">Bakiyem</h6>
+            1000 tl
+        </div>*@
+    </div>
+</div>
+
+
+
+

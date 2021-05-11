@@ -1,0 +1,12 @@
+﻿@model int
+@{
+    ViewData["Title"] = "Default";
+    Layout = null;
+}
+
+<a asp-action="GetAllByAlanId" asp-controller="Message" class="btn btn-primary">
+    
+    Gelen Mesajlar <span class="badge badge-light">@Model</span>
+</a>
+
+

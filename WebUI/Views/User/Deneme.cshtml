@@ -1,0 +1,10 @@
+﻿@model LoginCheck
+@{
+    ViewData["Title"] = "Deneme";
+}
+
+<h1>Deneme</h1>
+<form asp-action="Profile" asp-controller="User" method="post">
+   Kullanıcı Adı Giriniz <input asp-for="@Model.l"  value="" />
+</form>
+

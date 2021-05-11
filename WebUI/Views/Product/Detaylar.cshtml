@@ -1,0 +1,49 @@
+﻿@model Product
+
+@section navbar{ 
+<partial name="_usernavbar" />
+}
+@{
+    ViewData["Title"] = "Detaylar";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        <img src="~/img/@Model.ImageUrl" alt="Alternate Text" class="img-fluid" />
+        
+    </div>
+    <div class="col-md-9">
+        <h1 class="mb-3">
+            @Model.ProductName
+        </h1>
+        <hr />
+        @if (Model.CategoryId == 1)
+        {
+            <a asp-action="Bilgisayar" asp-controller="Category" class="btn btn-link p-0 mb-3">Bilgisayar</a>
+        }
+        @if (Model.CategoryId == 2)
+        {
+            <a asp-action="Telefon" asp-controller="Category" class="btn btn-link p-0 mb-3">Telefon</a>
+        }
+        @if (Model.CategoryId == 3)
+        {
+            <a asp-action="Giyim" asp-controller="Category" class="btn btn-link p-0 mb-3">Giyim</a>
+        }
+        @if (Model.CategoryId == 4)
+        {
+            <a asp-action="Yiyecek" asp-controller="Category" class="btn btn-link p-0 mb-3">Yiyecek</a>
+        }
+        @*<a asp-action="Telefon" asp-controller="Category" class="btn btn-link p-0 mb-3">Telefon</a>*@
+        <div class="mb-3">
+            <h4 class="text-primary mb-3"> @Model.ProductPrice TL</h4>
+            <a asp-action="Add" asp-controller="Basket" asp-route-id="@Model.Id" class="btn btn-primary btn-lg">Sepete Ekle</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <p class="p-3">@Model.Description</p>
+    </div>
+</div>
+

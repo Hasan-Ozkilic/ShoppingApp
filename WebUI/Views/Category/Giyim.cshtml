@@ -1,0 +1,35 @@
+﻿@model List<Product>
+
+@{
+    ViewData["Title"] = "Giyim";
+}
+
+@section navbar{
+    <partial name="_usernavbar" />
+}
+
+
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div style="position:fixed;">
+            <ul class="list-group">
+                <li class="list-group-item" style="width:320px;"><a asp-action="Bilgisayar" asp-controller="Category">Bilgisayar</a></li>
+                <li class="list-group-item"><a asp-action="Telefon" asp-controller="Category">Telefon</a></li>
+                <li class="list-group-item"><a asp-action="Giyim" asp-controller="Category">Giyim</a></li>
+                <li class="list-group-item"><a asp-action="Yiyecek" asp-controller="Category">Yiyecek</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-9">
+
+        @*<partial name="_slider" />*@
+
+        <div class="row mt-4">
+            @foreach (var product in Model)
+            {
+                <partial name="_allproduct" model="product" />
+            }
+        </div>
+
+    </div>
+</div>

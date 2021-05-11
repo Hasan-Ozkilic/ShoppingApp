@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebUI</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link href="~/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+
+
+
+</head>
+<body>
+
+    <header>
+        @RenderSection("navbar", false)
+
+    </header>
+
+
+
+    @RenderSection("menu", false)
+
+
+    @RenderBody()
+
+
+
+
+    <footer class="border-top footer text-muted" style="text-align:center">
+        <div style="background-color:black;color:white; max-width:100%;height:200px">
+            &copy; 2021 - WebUI - <br /><br /> Tüm Hakları Saklıdır <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    @RenderSection("script", false);
+</body>
+</html>

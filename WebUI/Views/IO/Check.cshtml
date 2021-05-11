@@ -1,0 +1,16 @@
+﻿@model LoginCheck
+
+    <form asp-action="Index" asp-controller="User" method="post">
+        
+      Sayın  <select asp-for="@Model.l">
+    <option value="@Model.l" >@Model.l</option >
+</select>
+        Giriş Yapılıyorrrrr.....
+
+             <select asp-for="@Model.i">
+             <option value="@Model.i" >@Model.i</option>
+             </select>
+             Onayla yazınız : <input type="text" name="onayla" value=""   placeholder="ONAYLA"/>
+             <button class="btn btn-primary">Onayla</button>
+        
+    </form>

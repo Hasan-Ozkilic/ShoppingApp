@@ -1,0 +1,11 @@
+﻿@model int
+
+@{
+    ViewData["Title"] = "Default";
+    Layout = null;
+}
+
+<a asp-action="GetAllByYollayanId" asp-controller="Message" class="btn btn-primary">
+
+    Gönderilenler <span class="badge badge-light">@Model</span>
+</a>

@@ -1,0 +1,195 @@
+﻿using Business.Abstract;
+using Entities;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using WebUI.Models;
+
+namespace WebUI.Controllers
+{
+    public class MessageController : Controller
+    {
+        IMessageService _messageService;
+        IUserService _userService;
+        IFakeMessageService _fakeMessageService;
+
+        public MessageController(IMessageService messageService, IUserService userService, IFakeMessageService fakeMessageService)
+        {
+            _messageService = messageService;
+            _userService = userService;
+            _fakeMessageService = fakeMessageService;
+
+        }
+        public IActionResult Add(int id) // satıcı id gelir. alanId
+        {
+            if (!(Convert.ToBoolean(HttpContext.Session.GetString("Active"))))
+            {
+                return RedirectToAction("Login", "IO");
+            }
+
+            string tempId = HttpContext.Session.GetString("id");
+            int userId = int.Parse(tempId); //yollayanId
+            var alanKullanıcı = _userService.GetById(id);
+            var yollayanKullanıcı = _userService.GetById(userId);
+            MessageAddModel messageAddModel = new MessageAddModel();
+            messageAddModel.AlanId = id;
+            messageAddModel.YollayanId = userId;
+            messageAddModel.Alan = alanKullanıcı;
+            messageAddModel.Yollayan = yollayanKullanıcı;
+
+            return View(messageAddModel);
+        }
+        [HttpPost]
+        public IActionResult Add(int id, string message) // satıcı id gelir. alanId
+        {
+            if (!(Convert.ToBoolean(HttpContext.Session.GetString("Active"))))
+            {
+                return RedirectToAction("Login", "IO");
+            }
+
+            string tempId = HttpContext.Session.GetString("id");
+            int userId = int.Parse(tempId); //yollayanId
+            Message mesaj = new Message()
+            {
+                AlanId = id,
+                YollayanId = userId,
+                Mesaj = message,
+                MesajTarihi = DateTime.Now
+            };
+            _messageService.Add(mesaj);
+            
+            FakeMessage fakeMessage = new FakeMessage() // fake mesaj veritabanına ürün eklendi
+            {
+                RealMessageId = mesaj.Id,
+                AlanId = id,
+                Mesaj = message,
+                MesajTarihi = mesaj.MesajTarihi,
+                YollayanId = userId
+            };
+       
+            _fakeMessageService.Add(fakeMessage);
+
+
+            return RedirectToAction("GetAll", "Product");
+        }
+
+        public IActionResult GetAllByAlanId()
+        {
+            if (!(Convert.ToBoolean(HttpContext.Session.GetString("Active"))))
+            {
+                return RedirectToAction("Login", "IO");
+            }
+
+            string tempId = HttpContext.Session.GetString("id");
+            int userId = int.Parse(tempId); //yollayanId
+            List<MessageGetAllModel> messageGetAllModels = new List<MessageGetAllModel>();
+            //var messages = _messageService.GetByAlanId(userId);
+            var messages = _fakeMessageService.GetByAlanId(userId); // fakeservice tarafından çalıştırıldı.
+            foreach (var item in messages)
+            {
+                MessageGetAllModel messageGetAllModel = new MessageGetAllModel();
+                var alanKullanıcı = _userService.GetById(item.AlanId);
+                var yollayanKullanıcı = _userService.GetById(item.YollayanId);
+                messageGetAllModel.Alan = alanKullanıcı;
+                messageGetAllModel.Yollayan = yollayanKullanıcı;
+                messageGetAllModel.AlanId = item.AlanId;
+                messageGetAllModel.YollayanId = item.YollayanId;
+                messageGetAllModel.Message = item.Mesaj;
+                messageGetAllModel.MessageId = item.Id;
+                messageGetAllModel.Time = item.MesajTarihi;
+                messageGetAllModels.Add(messageGetAllModel);
+
+
+            }
+
+            return View(messageGetAllModels);
+
+        }
+
+        public IActionResult Delete(int id) // id li mesaj gelir.  
+        {
+            var message = _fakeMessageService.GetById(id);
+
+            _fakeMessageService.Delete(message);
+
+            // mesajı alan kişi kendi fake tablosundan siler fakat gerçek veritabanındaki mesajlardan silemez.
+            return RedirectToAction("GetAllByAlanId", "Message");
+        }
+        public IActionResult DeletePost(int id) // id li mesaj gelir.
+        {
+            var fakeMessage = _fakeMessageService.GetByMessageId(id);
+
+            var message = _messageService.GetById(id);
+            _messageService.Delete(message);
+            _fakeMessageService.Delete(fakeMessage); 
+            // mesaj yollayan kullanıcı hem fake den hemde gerçek mesajlardan siler.
+
+            return RedirectToAction("GetAllByYollayanId", "Message");
+        }
+        public IActionResult Update(int id) //realId gelir //_send den gelir ki mantıklı olan budur yollayan günceller
+        {
+           // FakeService de burası için bir fonksiyon oluşturulabilir. Parametresi realMesssageId
+             // olan ve geriye sadece bir tane fake message döndüren bir fonksiyon. f=>f.Id ==realMessageId
+            HttpContext.Session.SetString("realMessageId", id.ToString());
+
+            //return RedirectToAction("GetAllByYollayanId", "Message");
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Update(string message)
+        {
+            string realMessageId = HttpContext.Session.GetString("realMessageId");
+            int messageId = int.Parse(realMessageId);
+            var realMessage = _messageService.GetById(messageId);
+            var fakeMessage = _fakeMessageService.GetByMessageId(messageId);
+            realMessage.Mesaj = message;
+            realMessage.MesajTarihi = DateTime.Now;
+           
+            _messageService.Update(realMessage);
+            var realMessage2 = _messageService.GetById(messageId);
+
+            fakeMessage.Mesaj = message;
+            fakeMessage.MesajTarihi = realMessage2.MesajTarihi;
+            _fakeMessageService.Update(fakeMessage);
+
+       
+            return RedirectToAction("GetAllByYollayanId", "Message");
+        }
+
+
+        public IActionResult GetAllByYollayanId()
+        {
+            if (!(Convert.ToBoolean(HttpContext.Session.GetString("Active"))))
+            {
+                return RedirectToAction("Login", "IO");
+            }
+
+            string tempId = HttpContext.Session.GetString("id");
+            int userId = int.Parse(tempId); //yollayanId
+            List<MessageGetAllModel> messageGetAllModels = new List<MessageGetAllModel>();
+            var messages = _messageService.GetByYollayanId(userId);
+            foreach (var item in messages)
+            {
+                MessageGetAllModel messageGetAllModel = new MessageGetAllModel();
+                var alanKullanıcı = _userService.GetById(item.AlanId);
+                var yollayanKullanıcı = _userService.GetById(item.YollayanId);
+                messageGetAllModel.Alan = alanKullanıcı;
+                messageGetAllModel.Yollayan = yollayanKullanıcı;
+                messageGetAllModel.AlanId = item.AlanId;
+                messageGetAllModel.YollayanId = item.YollayanId;
+                messageGetAllModel.Message = item.Mesaj;
+                messageGetAllModel.MessageId = item.Id;
+                messageGetAllModel.Time = item.MesajTarihi;
+                messageGetAllModels.Add(messageGetAllModel);
+
+
+            }
+
+            return View(messageGetAllModels);
+        }
+    }
+}

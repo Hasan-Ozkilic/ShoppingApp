@@ -1,0 +1,18 @@
+﻿@model List<MessageGetAllModel> 
+@{
+    ViewData["Title"] = "Gelen Kutusu";
+}
+
+@section navbar{ 
+<partial name="_usernavbar" />
+}
+
+
+    @foreach (var item in Model)
+    {
+        <partial name="_messages"  model="item"/>
+
+    }
+
+
+

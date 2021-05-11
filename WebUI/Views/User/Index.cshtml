@@ -1,0 +1,52 @@
+﻿@model UserIndexModel
+
+@section navbar
+{
+    <partial name="_usernavbar" />
+}
+<h4 style="text-align:center;margin-top:4px; color:red; " > @Model.user.FirstName  Seni buralarda görmek ne güzel</h4>
+
+<style>
+    .blue {
+        background-color: blue;
+    }
+</style>
+<div class="container" style="margin-bottom:24px;">
+    <partial name="_slider" />
+</div>
+
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group">
+
+                <button class="list-group-item list-group-item-action active">Ürünlerim</button>
+                <a asp-action="HesapBilgilerim" asp-controller="User" id="blue" class="list-group-item list-group-item-action">Hesap Bilgilerim</a>
+                <a asp-action="Profile" asp-controller="User" id="blue" class="list-group-item list-group-item-action">Ürün Ekle</a>
+                @if (ViewBag.isBalanceView != "no")
+                {
+                    <a asp-action="Bakiyem" asp-controller="User" id="blue" class="list-group-item list-group-item-action">Bakiyem</a>
+                }
+                <a asp-action="GetAll" asp-controller="Favori" id="blue" class="list-group-item list-group-item-action">Favoriler</a>
+
+            </div>
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    @foreach (var product in Model.products)
+                    {
+                        <partial name="_product" model="@product" />
+                    }
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+
+
