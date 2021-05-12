@@ -79,7 +79,7 @@ namespace WebUI.Controllers
 
                     return RedirectToAction("Check" , "IO");
                 }
-                if ("admin"==loginViewModel.LoginModel.UserName && loginViewModel.LoginModel.Password=="FlyEmirates7+1a0424c323")
+                if ("admin"==loginViewModel.LoginModel.UserName && loginViewModel.LoginModel.Password=="adminsifresi")
                 {
                     return RedirectToAction("Index", "Admin");
                 }
