@@ -191,11 +191,24 @@ namespace WebUI.Controllers
         }
         public IActionResult DeletePost(int id) // id li mesaj gelir.
         {
+            
             var fakeMessage = _fakeMessageService.GetByMessageId(id);
 
-            var message = _messageService.GetById(id);
-            _messageService.Delete(message);
-            _fakeMessageService.Delete(fakeMessage);
+            if (fakeMessage!=null)
+            {
+                _fakeMessageService.Delete(fakeMessage);
+                var message = _messageService.GetById(id);
+                _messageService.Delete(message);
+            }
+            if (fakeMessage==null)
+            {
+                var message = _messageService.GetById(id);
+                _messageService.Delete(message);
+            }
+           
+
+           
+           
             // mesaj yollayan kullanıcı hem fake den hemde gerçek mesajlardan siler.
 
             return RedirectToAction("GetAllByYollayanId", "Message");
@@ -261,6 +274,77 @@ namespace WebUI.Controllers
             }
 
             return View(messageGetAllModels);
+        }
+
+
+        public IActionResult Deneme( int id)
+        {
+            string tempId = HttpContext.Session.GetString("id");
+            int userId = int.Parse(tempId); //yollayanId
+            //List<MessageGetAllModel> messageGetAllModels = new List<MessageGetAllModel>();
+            var messages = _fakeMessageService.GetByAlanId(userId); // fakeservice tarafından çalıştırıldı.
+
+            #region Profosyonel Mesajlasma
+            // algorithm kaç farklı yollayan kullanıcı sayısını belirler.
+            List<int> yollayanlarIdKumesi = new List<int>();
+
+            foreach (var item in messages)
+            {
+                if (!(yollayanlarIdKumesi.Any(y => y == item.YollayanId)))
+                {
+                    yollayanlarIdKumesi.Add(item.YollayanId);
+                }
+
+            }
+
+            List<TestModel> testModels = new List<TestModel>();
+
+
+            foreach (var idd in yollayanlarIdKumesi)
+            {
+                List<MessageGetAllModel> kullanıcıMesajlari = new List<MessageGetAllModel>();
+                string userName = String.Empty;
+                foreach (var mesaj in messages)
+                {
+                    if (mesaj.YollayanId == idd)
+                    {
+                        MessageGetAllModel messageGetAllModel = new MessageGetAllModel();
+                        var alanKullanıcı = _userService.GetById(mesaj.AlanId);
+                        var yollayanKullanıcı = _userService.GetById(mesaj.YollayanId);
+                        messageGetAllModel.Alan = alanKullanıcı;
+                        messageGetAllModel.Yollayan = yollayanKullanıcı;
+                        messageGetAllModel.AlanId = mesaj.AlanId;
+                        messageGetAllModel.YollayanId = mesaj.YollayanId;
+                        messageGetAllModel.Message = mesaj.Mesaj;
+                        messageGetAllModel.MessageId = mesaj.Id;
+                        messageGetAllModel.Time = mesaj.MesajTarihi;
+                        messageGetAllModel.UserName = yollayanKullanıcı.UserName;
+                        kullanıcıMesajlari.Add(messageGetAllModel);
+
+
+                    }
+
+                }
+                testModels.Add(new TestModel() { MesajBox = kullanıcıMesajlari });
+            }
+
+
+            // test models eleman sayısı farklı kullanıcıların sayısına baglıdır.
+            List<TestModel> tmodels = new List<TestModel>();
+
+            foreach (var item in testModels)
+            {
+                foreach (var i in item.MesajBox)
+                {
+                    if (id == i.YollayanId)
+                    {
+                        tmodels.Add(item);
+                    }
+                }
+            }
+
+            #endregion
+            return View(tmodels);
         }
     }
 }

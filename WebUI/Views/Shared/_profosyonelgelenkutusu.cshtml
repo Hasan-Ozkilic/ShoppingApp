@@ -1,6 +1,26 @@
-﻿@model MessageGetAllModel 
+﻿@model MessageGetAllModel
 
 
-@Model.Message
-<br />
-<hr />
+
+<div class="row" style="margin-top:12px; border-bottom: 4px solid green; padding-bottom:8px; margin-bottom:16px;">
+    <div class="col-md-8" style="background-color: white; color:black; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+        <div class="container">
+            <p style="font-weight:bold; font-size:18px;"> @Model.Message</p>
+        </div>
+    </div>
+    <div class="col-md-3" style="background-color:crimson; color:white; text-align:center; font-weight:bold;">
+        Kimden : @Model.Yollayan.UserName
+        <small style="color:white;"> @Model.Time</small>
+    </div>
+    <div class="col-md-1" style="text-align:center;">
+        <a class="btn btn-danger btn-sm" style="color:white;"   asp-action="Delete" asp-controller="Message" asp-route-id="@Model.MessageId">
+            @*buradaki MessageID == fake tablodaki id dir.*@
+            <i class="fa fa-times fa-fw"></i>
+        </a>
+       
+    </div>
+</div>
+
+
+
+ 

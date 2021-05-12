@@ -96,38 +96,28 @@
 
     var result = item.MesajBox;
     string kullaniciAdi = "";
+    int id = 0;
 
     foreach (var userName in result)
     {
         kullaniciAdi = userName.UserName;
+        id = userName.YollayanId;
     }
 
 
     <div class="gosterButonu" id="@temp">
         <img class="esnekResim" src="../ornek_resimleri/ornekResim2.jpg" />
-       @kullaniciAdi içeriği...
-    <br /><br /> Mesaj Sayısı = @item.MesajBox.Count;
+       @item. içeriği...
+    <a asp-action="Deneme" asp-controller="Message" asp-route-id="@id">Deneme</a>
     </div>
 
-    <div id="@kutu" class="kutu">
-        <div class="icKutu">
-            <div class="kapatButonuCerceve">
-                <div class="kapatButonu">X</div>
-            </div>
-            <h1>Gelen Kutusu</h1><div class="clear"></div> <!-- floatın etkisini kaldırmak için clear:both kullanıyoruz-->
+ 
           
 
 
 
-            @foreach (var kullanıcı in item.MesajBox)
-            {
-                <partial name="_profosyonelgelenkutusu" model="@kullanıcı" />
-            }
 
-        <br /><br />
-            mesaj yaz
-        </div>
-    </div>
+    
 }
 
 
