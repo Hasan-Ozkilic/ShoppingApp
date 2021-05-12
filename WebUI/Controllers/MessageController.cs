@@ -60,7 +60,7 @@ namespace WebUI.Controllers
                 MesajTarihi = DateTime.Now
             };
             _messageService.Add(mesaj);
-            
+
             FakeMessage fakeMessage = new FakeMessage() // fake mesaj veritabanına ürün eklendi
             {
                 RealMessageId = mesaj.Id,
@@ -69,7 +69,7 @@ namespace WebUI.Controllers
                 MesajTarihi = mesaj.MesajTarihi,
                 YollayanId = userId
             };
-       
+
             _fakeMessageService.Add(fakeMessage);
 
 
@@ -86,8 +86,77 @@ namespace WebUI.Controllers
             string tempId = HttpContext.Session.GetString("id");
             int userId = int.Parse(tempId); //yollayanId
             List<MessageGetAllModel> messageGetAllModels = new List<MessageGetAllModel>();
-            //var messages = _messageService.GetByAlanId(userId);
             var messages = _fakeMessageService.GetByAlanId(userId); // fakeservice tarafından çalıştırıldı.
+
+
+
+
+
+
+
+            #region Profosyonel Mesajlasma
+            // algorithm kaç farklı yollayan kullanıcı sayısını belirler.
+            List<int> yollayanlarIdKumesi = new List<int>();
+
+            foreach (var item in messages)
+            {
+                if (!(yollayanlarIdKumesi.Any(y => y == item.YollayanId)))
+                {
+                    yollayanlarIdKumesi.Add(item.YollayanId);
+                }
+
+            }
+
+            List<TestModel> testModels = new List<TestModel>();
+            
+
+            foreach (var id in yollayanlarIdKumesi)
+            {
+                List<MessageGetAllModel> kullanıcıMesajlari= new List<MessageGetAllModel>();
+                string userName = String.Empty;
+                foreach (var mesaj in messages)
+                {
+                    if (mesaj.YollayanId == id)
+                    {
+                        MessageGetAllModel messageGetAllModel = new MessageGetAllModel();
+                        var alanKullanıcı = _userService.GetById(mesaj.AlanId);
+                        var yollayanKullanıcı = _userService.GetById(mesaj.YollayanId);
+                        messageGetAllModel.Alan = alanKullanıcı;
+                        messageGetAllModel.Yollayan = yollayanKullanıcı;
+                        messageGetAllModel.AlanId = mesaj.AlanId;
+                        messageGetAllModel.YollayanId = mesaj.YollayanId;
+                        messageGetAllModel.Message = mesaj.Mesaj;
+                        messageGetAllModel.MessageId = mesaj.Id;
+                        messageGetAllModel.Time = mesaj.MesajTarihi;
+                        messageGetAllModel.UserName = yollayanKullanıcı.UserName;
+                        kullanıcıMesajlari.Add(messageGetAllModel);
+
+
+                    }
+                  
+                }
+                testModels.Add(new TestModel() {  MesajBox = kullanıcıMesajlari  });
+            }
+
+
+            // test models eleman sayısı farklı kullanıcıların sayısına baglıdır.
+
+            #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+            #region Normal Mesajlasma
+
+            // normal mesajlasma
             foreach (var item in messages)
             {
                 MessageGetAllModel messageGetAllModel = new MessageGetAllModel();
@@ -105,7 +174,9 @@ namespace WebUI.Controllers
 
             }
 
-            return View(messageGetAllModels);
+            #endregion Normal Mesajlasma
+
+            return View(testModels); // profosyonel mesajlasmadaki tests model kullanilir. 
 
         }
 
@@ -124,15 +195,15 @@ namespace WebUI.Controllers
 
             var message = _messageService.GetById(id);
             _messageService.Delete(message);
-            _fakeMessageService.Delete(fakeMessage); 
+            _fakeMessageService.Delete(fakeMessage);
             // mesaj yollayan kullanıcı hem fake den hemde gerçek mesajlardan siler.
 
             return RedirectToAction("GetAllByYollayanId", "Message");
         }
         public IActionResult Update(int id) //realId gelir //_send den gelir ki mantıklı olan budur yollayan günceller
         {
-           // FakeService de burası için bir fonksiyon oluşturulabilir. Parametresi realMesssageId
-             // olan ve geriye sadece bir tane fake message döndüren bir fonksiyon. f=>f.Id ==realMessageId
+            // FakeService de burası için bir fonksiyon oluşturulabilir. Parametresi realMesssageId
+            // olan ve geriye sadece bir tane fake message döndüren bir fonksiyon. f=>f.Id ==realMessageId
             HttpContext.Session.SetString("realMessageId", id.ToString());
 
             //return RedirectToAction("GetAllByYollayanId", "Message");
@@ -148,7 +219,7 @@ namespace WebUI.Controllers
             var fakeMessage = _fakeMessageService.GetByMessageId(messageId);
             realMessage.Mesaj = message;
             realMessage.MesajTarihi = DateTime.Now;
-           
+
             _messageService.Update(realMessage);
             var realMessage2 = _messageService.GetById(messageId);
 
@@ -156,7 +227,7 @@ namespace WebUI.Controllers
             fakeMessage.MesajTarihi = realMessage2.MesajTarihi;
             _fakeMessageService.Update(fakeMessage);
 
-       
+
             return RedirectToAction("GetAllByYollayanId", "Message");
         }
 

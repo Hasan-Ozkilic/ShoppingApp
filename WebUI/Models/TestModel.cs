@@ -7,7 +7,7 @@ namespace WebUI.Models
 {
     public class TestModel
     {
-        public MessageGetAllModel MesajBox { get; set; }
-        public string UserName { get; set; }
+        public List<MessageGetAllModel> MesajBox { get; set; }
+       
     }
 }
