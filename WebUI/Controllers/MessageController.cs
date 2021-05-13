@@ -1,4 +1,4 @@
-﻿using Business.Abstract;
+﻿ using Business.Abstract;
 using Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -85,7 +85,7 @@ namespace WebUI.Controllers
 
             string tempId = HttpContext.Session.GetString("id");
             int userId = int.Parse(tempId); //yollayanId
-            List<MessageGetAllModel> messageGetAllModels = new List<MessageGetAllModel>();
+            List<MessageGetAllModel> messageGetAllModels = new List<MessageGetAllModel>(); // normal mesajlasmanın ihtiyac duyulur silinebilir.
             var messages = _fakeMessageService.GetByAlanId(userId); // fakeservice tarafından çalıştırıldı.
 
 
@@ -254,7 +254,7 @@ namespace WebUI.Controllers
 
             string tempId = HttpContext.Session.GetString("id");
             int userId = int.Parse(tempId); //yollayanId
-            List<MessageGetAllModel> messageGetAllModels = new List<MessageGetAllModel>();
+            List<MessageGetAllModel> messageGetAllModels = new List<MessageGetAllModel>(); // silinebilir.
             var messages = _messageService.GetByYollayanId(userId);
             foreach (var item in messages)
             {
@@ -268,12 +268,62 @@ namespace WebUI.Controllers
                 messageGetAllModel.Message = item.Mesaj;
                 messageGetAllModel.MessageId = item.Id;
                 messageGetAllModel.Time = item.MesajTarihi;
-                messageGetAllModels.Add(messageGetAllModel);
+                messageGetAllModels.Add(messageGetAllModel); // buda yapılabilir , eğer olmazsa.
 
 
             }
 
-            return View(messageGetAllModels);
+            #region Profosyonel Mesajlasma
+            // algorithm kaç farklı yollayan kullanıcı sayısını belirler.
+            List<int> yollayanlarIdKumesi = new List<int>();
+
+            foreach (var item in messages)
+            {
+                if (!(yollayanlarIdKumesi.Any(y => y == item.AlanId)))
+                {
+                    yollayanlarIdKumesi.Add(item.AlanId); // yollayanlarda alana , alanlarda yollayan idlere bakılır, çünkü farklılık bunlarda oluşur.
+                }
+
+            }
+
+            List<TestModel> testModels = new List<TestModel>();
+
+
+            foreach (var id in yollayanlarIdKumesi)
+            {
+                List<MessageGetAllModel> kullanıcıMesajlari = new List<MessageGetAllModel>();
+                string userName = String.Empty;
+                foreach (var mesaj in messages)
+                {
+                    if (mesaj.AlanId == id)
+                    {
+                        MessageGetAllModel messageGetAllModel = new MessageGetAllModel();
+                        var alanKullanıcı = _userService.GetById(mesaj.AlanId);
+                        var yollayanKullanıcı = _userService.GetById(mesaj.YollayanId);
+                        messageGetAllModel.Alan = alanKullanıcı;
+                        messageGetAllModel.Yollayan = yollayanKullanıcı;
+                        messageGetAllModel.AlanId = mesaj.AlanId;
+                        messageGetAllModel.YollayanId = mesaj.YollayanId;
+                        messageGetAllModel.Message = mesaj.Mesaj;
+                        messageGetAllModel.MessageId = mesaj.Id;
+                        messageGetAllModel.Time = mesaj.MesajTarihi;
+                        messageGetAllModel.UserName = alanKullanıcı.UserName;
+                        kullanıcıMesajlari.Add(messageGetAllModel);
+
+
+                    }
+
+                }
+                testModels.Add(new TestModel() { MesajBox = kullanıcıMesajlari });
+            }
+
+
+            // test models eleman sayısı farklı kullanıcıların sayısına baglıdır.
+
+            #endregion
+         
+
+            return View(testModels);
         }
 
 
@@ -332,19 +382,92 @@ namespace WebUI.Controllers
             // test models eleman sayısı farklı kullanıcıların sayısına baglıdır.
             List<TestModel> tmodels = new List<TestModel>();
 
-            foreach (var item in testModels)
+            foreach (var item in testModels) //testModels kaç farklı kullanıcının olduğunun tespit, eder.
             {
                 foreach (var i in item.MesajBox)
                 {
                     if (id == i.YollayanId)
                     {
                         tmodels.Add(item);
+                        break; // istenilen kullanıcı bulundugu takdirde döngü sonlanır ve yollayan kullanıcıya ait tüm mesajlar gelir.
                     }
                 }
             }
 
             #endregion
             return View(tmodels);
+        }
+
+        public IActionResult YollayanDeneme(int id)
+        {
+            string tempId = HttpContext.Session.GetString("id");
+            int userId = int.Parse(tempId); //yollayanId
+            //List<MessageGetAllModel> messageGetAllModels = new List<MessageGetAllModel>();
+            var messages = _messageService.GetByYollayanId(userId); // message service tarafından çalıştırıldı.
+            
+            #region Profosyonel Mesajlasma
+            // algorithm kaç farklı yollayan kullanıcı sayısını belirler.
+            List<int> yollayanlarIdKumesi = new List<int>();
+
+            foreach (var item in messages)
+            {
+                if (!(yollayanlarIdKumesi.Any(y => y == item.AlanId)))
+                {
+                    yollayanlarIdKumesi.Add(item.AlanId);
+                }
+
+            }
+
+            List<TestModel> testModels = new List<TestModel>();
+
+
+            foreach (var idd in yollayanlarIdKumesi)
+            {
+                List<MessageGetAllModel> kullanıcıMesajlari = new List<MessageGetAllModel>();
+                string userName = String.Empty;
+                foreach (var mesaj in messages)
+                {
+                    if (mesaj.AlanId == idd)
+                    {
+                        MessageGetAllModel messageGetAllModel = new MessageGetAllModel();
+                        var alanKullanıcı = _userService.GetById(mesaj.AlanId);
+                        var yollayanKullanıcı = _userService.GetById(mesaj.YollayanId);
+                        messageGetAllModel.Alan = alanKullanıcı;
+                        messageGetAllModel.Yollayan = yollayanKullanıcı;
+                        messageGetAllModel.AlanId = mesaj.AlanId;
+                        messageGetAllModel.YollayanId = mesaj.YollayanId;
+                        messageGetAllModel.Message = mesaj.Mesaj;
+                        messageGetAllModel.MessageId = mesaj.Id;
+                        messageGetAllModel.Time = mesaj.MesajTarihi;
+                        messageGetAllModel.UserName = alanKullanıcı.UserName;
+                        kullanıcıMesajlari.Add(messageGetAllModel);
+
+
+                    }
+
+                }
+                testModels.Add(new TestModel() { MesajBox = kullanıcıMesajlari });
+            }
+
+
+            // test models eleman sayısı farklı kullanıcıların sayısına baglıdır.
+            List<TestModel> tmodels = new List<TestModel>();
+
+            foreach (var item in testModels) //testModels kaç farklı kullanıcının olduğunun tespit, eder.
+            {
+                foreach (var i in item.MesajBox)
+                {
+                    if (id == i.AlanId)
+                    {
+                        tmodels.Add(item);
+                        break; // istenilen kullanıcı bulundugu takdirde döngü sonlanır ve yollayan kullanıcıya ait tüm mesajlar gelir.
+                    }
+                }
+            }
+
+            #endregion
+            return View(tmodels);
+
         }
     }
 }

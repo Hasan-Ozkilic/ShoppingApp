@@ -8,6 +8,15 @@
 }
 
 <style type="text/css">
+
+    .daireclass {
+        background-color: #c06;
+        height: 100px;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        width: 100px;
+    }
+
     body {
         font-size: 14px;
         font-family: Verdana, Geneva, sans-serif;
@@ -80,45 +89,55 @@
         clear: both;
     }
 </style>
-@{ 
+@{
     int sayac = 0;
 }
 
-@foreach (var item in Model)
-{
-    sayac++;
-    string temp  = "link";
-    temp += sayac;
-
-    string kutu = "kutu";
-    kutu += sayac;
-
-
-    var result = item.MesajBox;
-    string kullaniciAdi = "";
-    int id = 0;
-
-    foreach (var userName in result)
+    @foreach (var item in Model)
     {
-        kullaniciAdi = userName.UserName;
-        id = userName.YollayanId;
+        sayac++;
+        string temp = "link";
+        temp += sayac;
+
+        string kutu = "kutu";
+        kutu += sayac;
+
+
+        var result = item.MesajBox;
+        string kullaniciAdi = "";
+        int id = 0;
+        int mesajSayisi = 0;
+
+        foreach (var userName in result)
+        {
+            kullaniciAdi = userName.UserName;
+            id = userName.YollayanId;
+            mesajSayisi++;
+
+        }
+
+
+
+        <a asp-action="Deneme" asp-controller="Message" asp-route-id="@id">
+
+            <div class="gosterButonu " id="@temp">
+                @*<img class="esnekResim" src="../ornek_resimleri/ornekResim2.jpg" />*@
+                @*@item. içeriği...*@
+                @kullaniciAdi <br />
+                @*<a asp-action="Deneme" asp-controller="Message" asp-route-id="@id">Mesajlar</a>*@
+                <div class="daireclass" style="color:white; font-weight:bold; text-align:center; padding-top:35px;margin-left:34px;margin-top:26px;">@mesajSayisi</div>
+            </div>
+
+
+        </a>
+
+
+
+
+
+
     }
 
-
-    <div class="gosterButonu" id="@temp">
-        <img class="esnekResim" src="../ornek_resimleri/ornekResim2.jpg" />
-       @item. içeriği...
-    <a asp-action="Deneme" asp-controller="Message" asp-route-id="@id">Deneme</a>
-    </div>
-
- 
-          
-
-
-
-
-    
-}
 
 
 

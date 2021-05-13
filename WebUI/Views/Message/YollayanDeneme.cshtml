@@ -1,0 +1,19 @@
+﻿
+@model List<TestModel>
+@{
+    ViewData["Title"] = "Gönderilenler";
+}
+
+@section navbar{
+    <partial name="_usernavbar" />
+}
+
+@foreach (var item in Model)
+{
+    @foreach (var kullanıcı in item.MesajBox)
+    {
+        <partial name="_send" model="@kullanıcı" /> 
+    }
+
+}
+
