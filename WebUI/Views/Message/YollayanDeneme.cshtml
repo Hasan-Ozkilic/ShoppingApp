@@ -7,13 +7,17 @@
 @section navbar{
     <partial name="_usernavbar" />
 }
+@{ int alanId = 0;}
 
 @foreach (var item in Model)
 {
     @foreach (var kullanıcı in item.MesajBox)
     {
-        <partial name="_send" model="@kullanıcı" /> 
+        <partial name="_send" model="@kullanıcı" />
+
+        alanId = kullanıcı.AlanId;
     }
 
 }
+<a style="margin-top:28px;" asp-controller="Message" asp-action="Add" asp-route-id="@alanId" class="btn btn-outline-primary btn-sm">Mesaj Yolla</a>
 
