@@ -18,9 +18,11 @@
                     <th>İptal Et</th>
                 </tr>
             </thead>
+            @{ string basketIds = String.Empty;} @*kullanıcının tüm basket id lerini toplar ve order detailse atar.*@
             <tbody>
                 @foreach (var item in Model)
                 {
+                    basketIds += item.BasketId+","; // basket idler tek tek foreach sayesinde toplanır.
                     <tr>
                         <td>
                             <img src="~/img/@item.Products.ImageUrl" width="80" />
@@ -74,7 +76,8 @@
                 <a asp-action="GetAll" asp-controller="Product" class="btn btn-primary">
                     <i class="fa fa-arrow-circle-left fa-fw"></i> Alışverişe Devam Et
                 </a>
-                <a asp-action="Odeme" asp-controller="Basket"  class="btn btn-primary">
+                <a asp-action="OrderDetails" asp-controller="Basket"  asp-route-id="@basketIds"  class="btn btn-primary">
+                    @*eski hali odemeye gider.*@ @*tasarım çalışması için odeme ye gider yoksa orderdetais e gitmesi gerek.  asp-route-id="basketIds"*@
                     Ödeme <i class="fa fa-arrow-circle-right fa-fw"></i>
                 </a>
             </div>

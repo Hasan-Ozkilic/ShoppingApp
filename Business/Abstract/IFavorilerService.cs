@@ -13,5 +13,6 @@ namespace Business.Abstract
         List<Favoriler> GetAll(int userId);
         List<Favoriler> GetByCategoryId(int userId, int categoryId);
         Favoriler GetById(int favoriId);
+        void Delete(int productId);
     }
 }

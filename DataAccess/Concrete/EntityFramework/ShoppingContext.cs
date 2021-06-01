@@ -19,6 +19,8 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<Favoriler> Favorites { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<FakeMessage> FakeMessages { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Card> Cards { get; set; }
 
 
     }   

@@ -16,7 +16,7 @@ namespace Business.Abstract
         List<Product> GetByUserId(int userId);
         //List<Product> GetByUserOrderId(int userOrderId);
         List<Product> ViewAllProducts(int userId);
-
+        List<Product> Search(string search , int userId);
         
     }
 

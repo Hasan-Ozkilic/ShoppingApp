@@ -1,9 +1,48 @@
-﻿
+﻿@model BasketOrderModel
 @{
     ViewData["Title"] = "Odeme";
 }
-@section navbar{ 
+@section navbar{
     <partial name="_usernavbar" />
 }
-Siparişiniz alınmıstır.
+
+Sayın @Model.FirstName @Model.LastName Sipariş Faturanız
+
+<div class="row">
+    <div class="col-md-8">
+        <table class="table table-striped">
+            <tr>
+                <th>ürün Resmi</th>
+                <th>Ürün İsmi</th>
+                <th>Ürün Fiyatı</th>
+                <th>Açıklama</th>
+            </tr>
+            @foreach (var item in Model.BasketLists)
+            {
+               
+                <tr>
+                    <td>
+                        <img src="~/img/@item.Products.ImageUrl" width="140" height="140" />
+                    </td>
+                    <td>@item.Products.ProductName</td>
+                    <td> @item.Products.ProductPrice</td>
+                    <td>@item.Products.Description</td>
+                </tr>
+              
+            }
+
+        </table>
+    </div>
+
+    <div class="col-md-4">
+
+        <p>Numaranız : @Model.Phone</p>
+        <p> Şehir : @Model.City</p>
+        Kart Bilgileri
+<pre>
+ @Model.CardDetails.CardName
+@Model.CardDetails.CardNumber   
+</pre>
+    </div>
+</div>
 

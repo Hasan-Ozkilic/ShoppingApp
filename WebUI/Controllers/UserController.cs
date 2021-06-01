@@ -145,6 +145,20 @@ namespace WebUI.Controllers
         
             return View(userBakiyemModel);
         }
+        public IActionResult Search(string search)
+        {
+            if (!(Convert.ToBoolean(HttpContext.Session.GetString("Active"))))
+            {
+                return RedirectToAction("Login", "IO");
+            }
+
+            string tempId = HttpContext.Session.GetString("id");
+            int userId = int.Parse(tempId);
+
+            var searchResults =  _productService.Search(search, userId); // arama yaparken kendi ürünlerini getirmez.
+
+            return View(searchResults);
+        }
     }
 
   

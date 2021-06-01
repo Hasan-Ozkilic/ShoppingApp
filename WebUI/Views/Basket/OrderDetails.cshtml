@@ -1,0 +1,127 @@
+﻿@model BasketOrderModel
+@{
+    ViewData["Title"] = "Siparişi Tamamla";
+}
+
+<h1>Checkout</h1>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <h4 class="mb-3">Sipariş Bilgileri</h4>
+        <form asp-action="OrderDetails" asp-controller="Basket" method="post">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="@Model.FirstName"></label>
+                    <input asp-for="@Model.FirstName" value="" class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="@Model.LastName"></label>
+                    <input asp-for="@Model.LastName" value="" class="form-control" />
+                </div>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.OrderList.Address"></label>
+                <textarea asp-for="@Model.OrderList.Address" class="form-control"></textarea>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label asp-for="@Model.City"></label>
+                    <input asp-for="@Model.City" value="" class="form-control" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="@Model.Phone"></label>
+                    <input asp-for="@Model.Phone" value="" class="form-control" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="@Model.OrderList.EMail"></label>
+                    <input asp-for="@Model.OrderList.EMail" value="" class="form-control" />
+                </div>
+            </div>
+            <hr class="mb-4" />
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="save-info">
+                <label class="custom-control-label" for="save-info">Save this information for next time</label>
+            </div>
+            <hr class="mb-4" />
+            <div class="d-block my-3">
+                <div class="custom-control custom-radio">
+                    <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">
+                    <label class="custom-control-label" for="credit">Credit card</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required="">
+                    <label class="custom-control-label" for="eft">EFT</label>
+                </div>
+            </div>
+            <h4 class="mb-3">Payment</h4>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="@Model.CardDetails.CardName"></label>
+                    <input asp-for="@Model.CardDetails.CardName" value="" class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="@Model.CardDetails.CardNumber"></label>
+                    <input asp-for="@Model.CardDetails.CardNumber" value="" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label asp-for="@Model.CardDetails.ExpirationMonth"></label>
+                    <input asp-for="@Model.CardDetails.ExpirationMonth" value="" class="form-control" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="@Model.CardDetails.ExpirationYear"></label>
+                    <input asp-for="@Model.CardDetails.ExpirationYear" value="" class="form-control" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="@Model.CardDetails.Cvv"></label>
+                    <input asp-for="@Model.CardDetails.Cvv" value="" class="form-control" />
+                </div>
+            </div>
+            <hr class="mb-4" />
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Complete Order</button>
+        </form>
+    </div>
+    <div class="col-md-4 mb-4">
+
+        @{
+            int toplam = 0;
+        }
+
+        <div class="text-left">
+            <h4>Alışveriş Özeti</h4>
+        </div>
+        <table class="table">
+            <tbody>
+                <tr>
+
+                    <th>Ürün Toplam</th>
+                    @foreach (var item in Model.BasketLists)
+                    {
+                        toplam += item.Products.ProductPrice;
+                    }
+                    <td>@toplam.ToString("c")</td>
+                </tr>
+                <tr>
+                    <th>Kargo</th>
+                    <td>Bedava</td>
+                </tr>
+                <tr>
+                    <th>Toplam</th>
+                    <td>@toplam.ToString("c")</td>
+                </tr>
+            </tbody>
+        </table>
+        <!--<div class="text-center">
+            <a asp-action="GetAll" asp-controller="Product" class="btn btn-primary">
+                <i class="fa fa-arrow-circle-left fa-fw"></i> Alışverişe Devam Et
+            </a>
+            <a asp-action="OrderDetails" asp-controller="Basket" class="btn btn-primary" asp-route-id="at//basketIds">-->
+                @*eski hali odemeye gider.*@
+                <!--Ödeme <i class="fa fa-arrow-circle-right fa-fw"></i>
+            </a>
+        </div>-->
+
+
+    </div>
+</div>

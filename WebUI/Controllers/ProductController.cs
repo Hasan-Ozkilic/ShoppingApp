@@ -17,12 +17,15 @@ namespace WebUI.Controllers
         IProductService _productService;
         ICategoryService _categoryService;
         IUserService _userService;
+        IFavorilerService _favorilerService;
      
-        public ProductController(IProductService productService , ICategoryService categoryService , IUserService userService)
+        public ProductController(IProductService productService ,
+            ICategoryService categoryService , IUserService userService , IFavorilerService favorilerService)
         {
             _productService = productService;
             _categoryService = categoryService;
             _userService = userService;
+            _favorilerService = favorilerService;
            
         }
         [HttpPost]
@@ -58,11 +61,12 @@ namespace WebUI.Controllers
             User user=_userService.GetById(loginCheck.i);
             loginCheck.l = user.UserName;
 
-            return View("Message" ,loginCheck);
+            //return View("Message" , loginCheck); // post view çagırmamalı redirect to action daha öamtıklı olacaktır.
+            return RedirectToAction("Message", "Product");
         }
         public IActionResult Message()
         {
-            return View();
+            return View(); // sonra güzelleştirilebilir.
         }
         public IActionResult Telefon() // silineebilir.
         {
@@ -80,7 +84,7 @@ namespace WebUI.Controllers
             return View(productList);
         }
       
-        public IActionResult  Delete(int id)
+        public IActionResult  Delete(int id) 
         {
             if (!(Convert.ToBoolean(HttpContext.Session.GetString("Active"))))
             {
@@ -89,6 +93,7 @@ namespace WebUI.Controllers
 
             Product productToDelete=  _productService.GetById(id);
             _productService.Delete(productToDelete);
+            _favorilerService.Delete(productToDelete.Id); //favorilerden de silinir ve null hatası oluşması engellenir.
             return RedirectToAction("Index", "User");
         }
         public IActionResult Update(int id )

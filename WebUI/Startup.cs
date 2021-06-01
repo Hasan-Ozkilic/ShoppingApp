@@ -49,6 +49,13 @@ namespace WebUI
             services.AddSingleton<IFakeMessageService, FakeMessageManager>();
             services.AddSingleton<IFakeMessageDal, EfFakeMessageDal>();
 
+            services.AddSingleton<IOrderService,OrderManager>();
+            services.AddSingleton<IOrderDal, EfOrderDal>();
+
+            services.AddSingleton<ICardService, CardManager>();
+            services.AddSingleton<ICardDal, EfCardDal>();
+
+
 
 
 

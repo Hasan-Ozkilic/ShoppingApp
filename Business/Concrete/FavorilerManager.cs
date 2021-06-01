@@ -30,6 +30,12 @@ namespace Business.Concrete
             _favorilerDal.Delete(favoriler);
         }
 
+        public void Delete(int productId)
+        {
+          var favorite =   _favorilerDal.Get(f => f.ProductId == productId);
+            _favorilerDal.Delete(favorite);
+        }
+
         public List<Favoriler> GetAll(int userId)
         {
          var favoriler=    _favorilerDal.GetAll();
