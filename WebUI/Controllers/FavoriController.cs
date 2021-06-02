@@ -29,7 +29,42 @@ namespace WebUI.Controllers
             }
             string tempId = HttpContext.Session.GetString("id");
            int userId =  int.Parse(tempId);
-           var favoriler=  _favorilerService.GetAll(userId);
+
+
+
+            //string silinenUrun = HttpContext.Session.GetString("SilinenUrun");
+
+
+            //foreach (var favori in _favorilerService.GetAll(userId))
+            //{
+            //    if (favori.ProductId == int.Parse(silinenUrun))
+            //    {
+            //        // eğer bir kullanıcı bir ürünü silerse ve bu ürün diğer kullanıcıların favorilerinde yer alıyorsa 
+            //        // kullanıcın favori listesinden de silinmektedir.
+            //        _favorilerService.Delete(favori); //favorilerden de silinir ve null hatası oluşması engellenir.
+            //        break;
+            //    }
+            //}
+
+        
+            foreach (var favori in _favorilerService.GetAll(userId))
+            {
+                bool logic = false;
+                foreach (var product in _productService.ViewAllProducts(userId))
+                {
+                    if (favori.ProductId==product.Id)
+                    {
+                        logic = true;
+                    }
+                }
+                if (logic == false)
+                {
+                    _favorilerService.Delete(favori); //favorilerden de silinir ve null hatası oluşması engellenir.
+                }
+            }
+
+
+            var favoriler=  _favorilerService.GetAll(userId);
 
             List<FavoriGetAllModel> favoriGetAllModels = new List<FavoriGetAllModel>();
             foreach (var item in favoriler)
@@ -70,6 +105,7 @@ namespace WebUI.Controllers
         }
         public IActionResult Delete(int id)
         {
+           
 
             if (!(Convert.ToBoolean(HttpContext.Session.GetString("Active"))))
             {
@@ -77,6 +113,23 @@ namespace WebUI.Controllers
             }
             var result =  _favorilerService.GetById(id);
             _favorilerService.Delete(result);
+
+            //string tempId = HttpContext.Session.GetString("id");
+            //int userId = int.Parse(tempId);
+
+            //string silinenUrun =  HttpContext.Session.GetString("SilinenUrun");
+          
+
+            //foreach (var favori in _favorilerService.GetAll(userId))
+            //{
+            //    if (favori.ProductId == int.Parse(silinenUrun))
+            //    {
+            //        // eğer bir kullanıcı bir ürünü silerse ve bu ürün diğer kullanıcıların favorilerinde yer alıyorsa 
+            //        // kullanıcın favori listesinden de silinmektedir.
+            //        _favorilerService.Delete(favori); //favorilerden de silinir ve null hatası oluşması engellenir.
+            //        break;
+            //    }
+            //}
           
 
 

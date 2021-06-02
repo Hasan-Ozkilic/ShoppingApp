@@ -93,7 +93,9 @@ namespace WebUI.Controllers
 
             Product productToDelete=  _productService.GetById(id);
             _productService.Delete(productToDelete);
-            _favorilerService.Delete(productToDelete.Id); //favorilerden de silinir ve null hatası oluşması engellenir.
+           // string silinenUrun = id.ToString();
+          //  HttpContext.Session.SetString("SilinenUrun", silinenUrun);
+           // _favorilerService.Delete(productToDelete.Id); //favorilerden de silinir ve null hatası oluşması engellenir.
             return RedirectToAction("Index", "User");
         }
         public IActionResult Update(int id )

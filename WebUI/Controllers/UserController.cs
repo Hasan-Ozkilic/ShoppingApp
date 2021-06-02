@@ -16,14 +16,16 @@ namespace WebUI.Controllers
     {
         IUserService _userService;
         IProductService _productService;
+        ICardService _cardService;
 
         public Yardımcı yardımcı = new Yardımcı();
        
         
-        public UserController(IUserService userService , IProductService productService )
+        public UserController(IUserService userService , IProductService productService , ICardService cardService)
         {
             _userService = userService;
             _productService = productService;
+            _cardService = cardService;
          
         }
 
@@ -105,7 +107,9 @@ namespace WebUI.Controllers
         }
         public IActionResult HesapBilgilerim()
         {
-           
+            string tempId = HttpContext.Session.GetString("id");
+            int userId = int.Parse(tempId);
+
             string tempUserName = HttpContext.Session.GetString("UserName");
          
             if (tempUserName==null)
@@ -116,12 +120,15 @@ namespace WebUI.Controllers
             {
                 return RedirectToAction("Login", "IO");
             }
+          Card userCard =   _cardService.GetByUserId(userId);
+
           
 
 
             User user = _userService.GetByUserName(tempUserName);
             UserHesapBilgilerimModel userHesapBilgilerimModel = new UserHesapBilgilerimModel();
             userHesapBilgilerimModel.User = user;
+            userHesapBilgilerimModel.CardInfos = userCard;
 
             return View(userHesapBilgilerimModel);
         }

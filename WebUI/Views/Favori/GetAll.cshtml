@@ -10,16 +10,7 @@
 <h4 style="color:red;">Favorilerin</h4>
 
 <div class="row mt-4">
-    <div class="col-md-3">
-        <div style="position:fixed;">
-            <ul class="list-group">
-                <li class="list-group-item" style="width:320px;"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="1">Bilgisayar</a></li>
-                <li class="list-group-item"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="2">Telefon</a></li>
-                <li class="list-group-item"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="3">Giyim</a></li>
-                <li class="list-group-item"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="4">Yiyecek</a></li>
-            </ul>
-        </div>
-    </div>
+    <partial name="_favoriyanmenu" />
     <div class="col-md-9">
 
         <partial name="_slider" />

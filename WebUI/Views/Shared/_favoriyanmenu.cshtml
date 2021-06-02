@@ -1,0 +1,89 @@
+﻿<style>
+    @@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400&subset=latin,latin-ext);
+
+    .css-toggle {
+        color: white;
+        font: 400 15px'Open Sans';
+        background-color: #0066FF;
+        width: 50%;
+        padding: 1%;
+        text-align: center;
+        display: inline-block;
+    }
+
+    .moda {
+        color: white;
+        font: 400 15px'Open Sans';
+        background-color: black;
+        width: 50%;
+        padding: 1%;
+        text-align: center;
+        display: inline-block;
+    }
+
+    .saat-aksesuar {
+        color: white;
+        font: 400 15px'Open Sans';
+        background-color: red;
+        width: 50%;
+        padding: 1%;
+        text-align: center;
+        display: inline-block;
+    }
+
+    .ayakkabi-canta {
+        color: white;
+        font: 400 15px'Open Sans';
+        background-color: seagreen;
+        width: 50%;
+        padding: 1%;
+        text-align: center;
+        display: inline-block;
+    }
+</style>
+
+
+
+
+
+<div class="col-md-3">
+    <div>
+
+        <div class="css-toggle toggle">
+            Elektronik
+
+        </div>
+
+        <ul class="list-group">
+
+            <li class="list-group-item" style="width:320px;"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="1">Bilgisayar</a></li>
+            <li class="list-group-item"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="2">Telefon</a></li>
+        </ul>
+        <div class="moda toggle">
+            Moda
+
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="3">Giyim</a></li>
+            <li class="list-group-item"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="4">Yiyecek</a></li>
+        </ul>
+        <div class="saat-aksesuar toggle">
+            Saat&amp;Aksesuar
+
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item"><a asp-action="Giyim" asp-controller="Category">Takı&amp;Mücevher</a></li>
+            <li class="list-group-item"><a asp-action="Yiyecek" asp-controller="Category">Saat</a></li>
+        </ul>
+        <div class="ayakkabi-canta toggle">
+            Ayakkabı&amp;Çanta
+
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item"><a asp-action="Giyim" asp-controller="Category">Erkek Ayakkabısı</a></li>
+            <li class="list-group-item"><a asp-action="Yiyecek" asp-controller="Category">Kadın Ayakkabısı</a></li>
+            <li class="list-group-item"><a asp-action="Giyim" asp-controller="Category">Çanta</a></li>
+            <li class="list-group-item"><a asp-action="Yiyecek" asp-controller="Category">Çoçuk Çantası</a></li>
+        </ul>
+    </div>
+</div>

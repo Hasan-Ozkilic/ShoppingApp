@@ -86,5 +86,96 @@ namespace WebUI.Controllers
            
             return View(footProducts);
         }
+
+        public IActionResult TakiVeMucevher()
+        {
+
+            if (!(Convert.ToBoolean(HttpContext.Session.GetString("Active"))))
+            {
+                return RedirectToAction("Login", "IO");
+            }
+            string tempId = HttpContext.Session.GetString("id");
+            int userId = int.Parse(tempId);
+            var viewAllProducts = _productService.ViewAllProducts(userId); // user ın ürünleri hariç tüm ürünler getirildi.
+            var takiVeMucevherler = viewAllProducts.Where(p => p.CategoryId == 1002).ToList();
+
+
+            return View(takiVeMucevherler);
+        }
+        public IActionResult Saat()
+        {
+
+            if (!(Convert.ToBoolean(HttpContext.Session.GetString("Active"))))
+            {
+                return RedirectToAction("Login", "IO");
+            }
+            string tempId = HttpContext.Session.GetString("id");
+            int userId = int.Parse(tempId);
+            var viewAllProducts = _productService.ViewAllProducts(userId); // user ın ürünleri hariç tüm ürünler getirildi.
+            var saatler = viewAllProducts.Where(p => p.CategoryId == 1003).ToList();
+
+
+            return View(saatler);
+        }
+        public IActionResult ErkekAyakkabisi()
+        {
+
+            if (!(Convert.ToBoolean(HttpContext.Session.GetString("Active"))))
+            {
+                return RedirectToAction("Login", "IO");
+            }
+            string tempId = HttpContext.Session.GetString("id");
+            int userId = int.Parse(tempId);
+            var viewAllProducts = _productService.ViewAllProducts(userId); // user ın ürünleri hariç tüm ürünler getirildi.
+            var erkekAyakkabilari = viewAllProducts.Where(p => p.CategoryId == 1004).ToList();
+
+
+            return View(erkekAyakkabilari);
+        }
+        public IActionResult KadinAyakkabisi()
+        {
+
+            if (!(Convert.ToBoolean(HttpContext.Session.GetString("Active"))))
+            {
+                return RedirectToAction("Login", "IO");
+            }
+            string tempId = HttpContext.Session.GetString("id");
+            int userId = int.Parse(tempId);
+            var viewAllProducts = _productService.ViewAllProducts(userId); // user ın ürünleri hariç tüm ürünler getirildi.
+            var kadinAyakkabilari = viewAllProducts.Where(p => p.CategoryId == 1005).ToList();
+
+
+            return View(kadinAyakkabilari);
+        }
+        public IActionResult Canta()
+        {
+
+            if (!(Convert.ToBoolean(HttpContext.Session.GetString("Active"))))
+            {
+                return RedirectToAction("Login", "IO");
+            }
+            string tempId = HttpContext.Session.GetString("id");
+            int userId = int.Parse(tempId);
+            var viewAllProducts = _productService.ViewAllProducts(userId); // user ın ürünleri hariç tüm ürünler getirildi.
+            var cantalar = viewAllProducts.Where(p => p.CategoryId == 1006).ToList();
+
+
+            return View(cantalar);
+        }
+        public IActionResult CocukCantasi()
+        {
+
+            if (!(Convert.ToBoolean(HttpContext.Session.GetString("Active"))))
+            {
+                return RedirectToAction("Login", "IO");
+            }
+            string tempId = HttpContext.Session.GetString("id");
+            int userId = int.Parse(tempId);
+            var viewAllProducts = _productService.ViewAllProducts(userId); // user ın ürünleri hariç tüm ürünler getirildi.
+            var cocukCantalari = viewAllProducts.Where(p => p.CategoryId == 1007).ToList();
+
+
+            return View(cocukCantalari);
+        }
     }
 }

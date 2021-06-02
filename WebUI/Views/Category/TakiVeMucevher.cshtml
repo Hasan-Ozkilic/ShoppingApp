@@ -1,7 +1,11 @@
-﻿@model List<Product>
+﻿
+
+
+@model List<Product>
+
 
 @{
-    ViewData["Title"] = "GetAll";
+    ViewData["Title"] = "TakiVeMucevher";
 }
 
 @section navbar{
@@ -10,11 +14,13 @@
 
 
 
+
+
 <div class="row mt-4">
- <partial name="_yanmenu" />
+    <partial name="_yanmenu" />
     <div class="col-md-9">
 
-        <partial name="_slider" />
+        @*<partial name="_slider" />*@
 
         <div class="row mt-4">
             @foreach (var product in Model)
@@ -25,3 +31,4 @@
 
     </div>
 </div>
+

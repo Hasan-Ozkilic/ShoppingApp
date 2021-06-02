@@ -10,5 +10,6 @@ namespace WebUI.Models
     {
         public User User { get; set; }
         public bool Active { get; set; }
+        public Card CardInfos { get; set; }
     }
 }

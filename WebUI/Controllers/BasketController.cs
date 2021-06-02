@@ -348,10 +348,10 @@ namespace WebUI.Controllers
             builder.Append("</head>");
             builder.Append("<body>");
            
-            builder.Append("<h4>Sayın " + basketOrderModel.FirstName+" "+ basketOrderModel.LastName+" Sipariş Faturanız</h4>");
+            builder.Append("<h4 style=\"text-align:center;color:red;\">Sayin " + basketOrderModel.FirstName+" "+ basketOrderModel.LastName+" Siparis Faturaniz</h4><br><br>");
             builder.Append("<table class=\"table table-striped\">");
             builder.Append("  <tr>");
-            builder.Append("<th>Ürün Resmi </th><th>Ürün İsmi </th><th>Ürün Fiyatı</th><th>Açıklama </th> ");
+            builder.Append("<th>Ürün resmi </th><th>Ürün ismi </th><th>Ürün fiyatı</th><th>Açiklama </th> ");
             builder.Append("</tr>");
             foreach (var item in basketListele)
             {
@@ -359,7 +359,7 @@ namespace WebUI.Controllers
                 string imagePath = "wwwroot\\"+"img\\"+item.Products.ImageUrl;
           
                 //var imageFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, imagePath);
-                 builder.Append("<td>  <img src="+"\""+imagePath +"\""+" " +  "width=\"140\" height=\"140\" /> </td><td>"+item.Products.ProductName+ "</td><td>"+item.Products.ProductPrice+"</td><td>"+item.Products.Description+" </td> ");
+                 builder.Append("<td>  <img src="+"\""+imagePath +"\""+" " +  "width=\"100\" height=\"100\" /> </td><td>"+item.Products.ProductName+ "</td><td>"+item.Products.ProductPrice+"</td><td>"+item.Products.Description+" </td> ");
               
                 builder.Append("</tr>");
 
@@ -373,33 +373,28 @@ namespace WebUI.Controllers
             builder.Append("</table>");
             builder.Append("<div style=\" text-align:center;margin-top:40px; font-family: Arial, Helvetica, sans - serif; \">");
 
-            builder.Append("<ul>");
-            builder.Append("<li>");
-            builder.Append(" Telefon Numaranız :  "+basketOrderModel.Phone+ " </ul>");
+          
+          
+           
+          
 
-
-            builder.Append("</li>");
-            builder.Append("<li>");
-
-            builder.Append(" Şehriniz :  " + basketOrderModel.City + " </ul>");
-            builder.Append("</li>");
-
-
-
-            builder.Append("</ul>");
             builder.Append("<pre>");
             builder.Append("<br><br><h4 style=\"color:red;\">-- Kart Bilgileriniz --</h4>"+ "<br>");
             builder.Append(" Kart İsminiz : "  + basketOrderModel.CardDetails.CardName +"<br>" );
-            builder.Append(" Kart Numaranız : " + basketOrderModel.CardDetails.CardNumber+"<br>");
+            builder.Append(" Kart Numaraniz : " + basketOrderModel.CardDetails.CardNumber+"<br>");
             builder.Append(" Son kullanma tarihi : " + basketOrderModel.CardDetails.ExpirationMonth +"\\"+basketOrderModel.CardDetails.ExpirationYear + "<br>");
             int toplam = 0;
             foreach (var item in basketListele)
             {
                toplam+= item.Products.ProductPrice;
             }
-            builder.Append("<br><br> Sipariş Tutarı : " + toplam + "<br>");
-            builder.Append(" Sipariş Adresiniz : " + basketOrderModel.OrderList.Address + "<br>");
+            builder.Append("<br><br><h4 style=\"color:red;\">-- Sipariş Bilgileriniz --</h4>" + "<br>");
+            builder.Append(" Siparis Tutari : " + toplam +" TL"+ "<br>");
+            builder.Append(" Siparis Adresiniz : " + basketOrderModel.OrderList.Address + "<br>");
             builder.Append(" E-Mail Adresiniz : " + basketOrderModel.OrderList.EMail + "<br>");
+            builder.Append(" Siparis Tarihi  : " + basketOrderModel.OrderList.OrderTime + "<br>");
+            builder.Append(" Telefon Numaraniz :  " + basketOrderModel.Phone + "<br>");
+            builder.Append(" Sehriniz :  " + basketOrderModel.City + "<br>");
             builder.Append("</pre>");
 
             builder.Append("</div>");
@@ -439,7 +434,7 @@ namespace WebUI.Controllers
                 msg.Attachments.Add(new Attachment(new MemoryStream(bytes), "SiparisFaturasi.pdf"));
              //   msg.Attachments.Add(new Attachment("images/hp.jpg"));
 
-                NetworkCredential info = new NetworkCredential("deneme232323232323@gmail.com", "sifreniz");
+                NetworkCredential info = new NetworkCredential("deneme232323232323@gmail.com", "FlyEmirates7+1a0424c3");
                 client.Port = 587;
                 client.Host = "smtp.gmail.com";
                 client.EnableSsl = true;
