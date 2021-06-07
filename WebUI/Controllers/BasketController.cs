@@ -434,7 +434,7 @@ namespace WebUI.Controllers
                 msg.Attachments.Add(new Attachment(new MemoryStream(bytes), "SiparisFaturasi.pdf"));
              //   msg.Attachments.Add(new Attachment("images/hp.jpg"));
 
-                NetworkCredential info = new NetworkCredential("deneme232323232323@gmail.com", "FlyEmirates7+1a0424c3");
+                NetworkCredential info = new NetworkCredential("deneme232323232323@gmail.com", "sifreniz");
                 client.Port = 587;
                 client.Host = "smtp.gmail.com";
                 client.EnableSsl = true;

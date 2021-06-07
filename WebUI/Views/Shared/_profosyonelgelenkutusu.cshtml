@@ -9,8 +9,8 @@
         </div>
     </div>
     <div class="col-md-3" style="background-color:crimson; color:white; text-align:center; font-weight:bold;">
-        Kimden : @Model.Yollayan.UserName
-        <small style="color:white;"> @Model.Time</small>
+        @*Kimden : @Model.Yollayan.UserName*@
+        <p style="color:white;"> @Model.Time</p>
     </div>
     <div class="col-md-1" style="text-align:center;">
         <a class="btn btn-danger btn-sm" style="color:white;"   asp-action="Delete" asp-controller="Message" asp-route-id="@Model.MessageId">
