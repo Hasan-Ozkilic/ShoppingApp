@@ -29,24 +29,6 @@ namespace WebUI.Controllers
             }
             string tempId = HttpContext.Session.GetString("id");
            int userId =  int.Parse(tempId);
-
-
-
-            //string silinenUrun = HttpContext.Session.GetString("SilinenUrun");
-
-
-            //foreach (var favori in _favorilerService.GetAll(userId))
-            //{
-            //    if (favori.ProductId == int.Parse(silinenUrun))
-            //    {
-            //        // eğer bir kullanıcı bir ürünü silerse ve bu ürün diğer kullanıcıların favorilerinde yer alıyorsa 
-            //        // kullanıcın favori listesinden de silinmektedir.
-            //        _favorilerService.Delete(favori); //favorilerden de silinir ve null hatası oluşması engellenir.
-            //        break;
-            //    }
-            //}
-
-        
             foreach (var favori in _favorilerService.GetAll(userId))
             {
                 bool logic = false;

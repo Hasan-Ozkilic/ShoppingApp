@@ -335,10 +335,12 @@ namespace WebUI.Controllers
             #region Mail Yollama
             SmtpClient client = new SmtpClient();
             MailAddress from = new MailAddress("deneme232323232323@gmail.com", "ShoopingApp");
-            MailAddress to = new MailAddress("xkanal306@gmail.com");//bizim mail adresi
+            string eMail = basketOrderModel.OrderList.EMail;
+            MailAddress to = new MailAddress(eMail);//bizim mail adresi
             MailMessage msg = new MailMessage(from, to);
             msg.IsBodyHtml = true;
             msg.Subject = "Alışveriş Faturası";
+            
             #region StringBuilder ile Mail düzenleme
 
 
@@ -434,7 +436,7 @@ namespace WebUI.Controllers
                 msg.Attachments.Add(new Attachment(new MemoryStream(bytes), "SiparisFaturasi.pdf"));
              //   msg.Attachments.Add(new Attachment("images/hp.jpg"));
 
-                NetworkCredential info = new NetworkCredential("deneme232323232323@gmail.com", "sifreniz");
+                NetworkCredential info = new NetworkCredential("deneme232323232323@gmail.com", "FlyEmirates7+1a0424c3");
                 client.Port = 587;
                 client.Host = "smtp.gmail.com";
                 client.EnableSsl = true;
@@ -451,40 +453,40 @@ namespace WebUI.Controllers
 
             #region Odeme 
 
-            // Odeme actiondan buraya taşınmıştır. Çünkü  Post methotda olması daha uygun olacaktır.
+            //Odeme actiondan buraya taşınmıştır. Çünkü Post methotda olması daha uygun olacaktır.
 
-            //foreach (var item in basketProducts)
-            //{
-            //    var productToDeleted = _productService.GetById(item.ProductId); // tam sepette ödeme ye tıklarken ürün satılmışsa buradaki product
-            //    // null olabilir bu durumu sonra kontrol etmelisin.
-            //    var product = _productService.GetById(item.ProductId); // ilgili ürün bulunur. 
+            foreach (var item in basketProducts)
+            {
+                var productToDeleted = _productService.GetById(item.ProductId); // tam sepette ödeme ye tıklarken ürün satılmışsa buradaki product
+                // null olabilir bu durumu sonra kontrol etmelisin.
+                var product = _productService.GetById(item.ProductId); // ilgili ürün bulunur. 
 
-            //    int productPrice = product.ProductPrice; // ürünün fiyatı bulunur.
-            //    int saticiId = product.UserId;
-            //    User satici = _userService.GetById(saticiId);
-            //    satici.Balance += productPrice;
-            //    _userService.Update(satici); // saticinin bakiyesi güncellenir.
-
-
-            //    if (productToDeleted.UnitsInStock == 1)
-            //    {
+                int productPrice = product.ProductPrice; // ürünün fiyatı bulunur.
+                int saticiId = product.UserId;
+                User satici = _userService.GetById(saticiId);
+                satici.Balance += productPrice;
+                _userService.Update(satici); // saticinin bakiyesi güncellenir.
 
 
-            //        _productService.Delete(productToDeleted); // Stokta 1 tane varsa ilgili ürün silinir.
-            //        _favorilerService.Delete(item.ProductId); // favorilerden de silinir.
-
-            //    }
-            //    if (productToDeleted.UnitsInStock > 1)
-            //    {
-            //        productToDeleted.UnitsInStock -= 1;
-            //        _productService.Update(productToDeleted);
-
-            //    }
-
-            //    _basketService.Delete(item); // ilgili sipariş silinir.
+                if (productToDeleted.UnitsInStock == 1)
+                {
 
 
-            //}
+                    _productService.Delete(productToDeleted); // Stokta 1 tane varsa ilgili ürün silinir.
+                    _favorilerService.Delete(item.ProductId); // favorilerden de silinir.
+
+                }
+                if (productToDeleted.UnitsInStock > 1)
+                {
+                    productToDeleted.UnitsInStock -= 1;
+                    _productService.Update(productToDeleted);
+
+                }
+
+                _basketService.Delete(item); // ilgili sipariş silinir.
+
+
+            }
             #endregion
 
 

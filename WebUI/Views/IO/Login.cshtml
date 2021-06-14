@@ -121,8 +121,8 @@
         <input type="password" asp-for="@Model.LoginModel.Password" value="" placeholder="Şifre" required />
 
         <input type="submit" name="" value="Login">
-        <a href="#">Lost Your Password</a><br>
-        <a href="#">Don't have an account?</a>
+        <a asp-action="PasswordReset" asp-controller="IO">Şifremi unuttum</a><br>
+        <a asp-action="Index" asp-controller="IO">Hesabın yokmu hemen oluştur</a>
     </form>
     
 

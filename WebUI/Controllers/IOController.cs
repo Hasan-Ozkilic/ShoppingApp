@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using WebUI.Models;
 
@@ -79,7 +81,7 @@ namespace WebUI.Controllers
 
                     return RedirectToAction("Check" , "IO");
                 }
-                if ("admin"==loginViewModel.LoginModel.UserName && loginViewModel.LoginModel.Password=="adminsifresi")
+                if ("admin"==loginViewModel.LoginModel.UserName && loginViewModel.LoginModel.Password=="FlyEmirates7++++")
                 {
                     return RedirectToAction("Index", "Admin");
                 }
@@ -109,5 +111,66 @@ namespace WebUI.Controllers
             //(string loginViewModel, int id) tuple = ((string)result,(int)id);
             //return View(loginCheck);
         }
+
+        public IActionResult PasswordReset()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult PasswordReset(string UserName) //PasswordReset passwordReset
+        {
+          User user =   _userService.GetByUserName(UserName);
+            int userId = user.Id;
+                
+            
+
+            #region Mail Yollama
+            SmtpClient client = new SmtpClient();
+            MailAddress from = new MailAddress("deneme232323232323@gmail.com", "ShoopingApp");
+            string eMail = user.EMail;
+            MailAddress to = new MailAddress(eMail);//bizim mail adresi
+            MailMessage msg = new MailMessage(from, to);
+            msg.IsBodyHtml = true;
+            msg.Subject = "Şifre Sıfırlama";
+            msg.Body = "Şifre sıfırlama bağlantısı : "+"https://localhost:44323/IO/PasswordVerify";
+
+
+            NetworkCredential info = new NetworkCredential("deneme232323232323@gmail.com", "FlyEmirates7+1a0424c3");
+            client.Port = 587;
+            client.Host = "smtp.gmail.com";
+            client.EnableSsl = true;
+            client.Credentials = info;
+            client.Send(msg);
+            #endregion
+            return RedirectToAction("Result", "IO", new { userId = userId});
+        }
+        public IActionResult Result(int userId)
+        {
+
+
+            HttpContext.Session.SetString("UserPasswordReset", userId.ToString()); 
+            return View();
+        }
+       public IActionResult PasswordVerify()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult PasswordVerify(string password)
+        {
+            string userId = HttpContext.Session.GetString("UserPasswordReset");
+            int userIdPasswordChange = int.Parse(userId);
+           User user =  _userService.GetById(userIdPasswordChange);
+            user.Password = password;
+            _userService.Update(user);
+
+
+            return RedirectToAction("Login", "IO");
+        }
+
+       
     }
 }
