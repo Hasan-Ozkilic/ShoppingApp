@@ -11,7 +11,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace WebUI.Controllers
 {
-   
+
     public class UserController : Controller
     {
         IUserService _userService;
@@ -19,46 +19,46 @@ namespace WebUI.Controllers
         ICardService _cardService;
 
         public Yardımcı yardımcı = new Yardımcı();
-       
-        
-        public UserController(IUserService userService , IProductService productService , ICardService cardService)
+
+
+        public UserController(IUserService userService, IProductService productService, ICardService cardService)
         {
             _userService = userService;
             _productService = productService;
             _cardService = cardService;
-         
+
         }
 
-     [HttpGet] // post veya get yap burayı çöz
+        [HttpGet] // post veya get yap burayı çöz
         public IActionResult Index(/*LoginCheck loginCheck , string onayla*/ ) // id li user gelir.
         {
             //if (TempData["id"]==null)
             //{
             //    return RedirectToAction("Login", "IO");
             //}
-          
+
             if (!(Convert.ToBoolean(HttpContext.Session.GetString("Active"))))
             {
                 return RedirectToAction("Login", "IO");
             }
-            string yardımcı2 =  HttpContext.Session.GetString("yardımcı");
-            if (yardımcı2==null)
+            string yardımcı2 = HttpContext.Session.GetString("yardımcı");
+            if (yardımcı2 == null)
             {
                 return RedirectToAction("Login", "IO");
             }
-           int id =  int.Parse(yardımcı2);
+            int id = int.Parse(yardımcı2);
 
-         
+
             UserIndexModel userIndexModel = new UserIndexModel();
 
             userIndexModel.user = _userService.GetById(id);
 
             userIndexModel.products = _productService.GetByUserId(userIndexModel.user.Id);
-           
+
             // eğer kullanıcıda hiç ürün yok ise bu kullanıcı alıcıdır. Ve bakiye 
-                                                                    // görüntülemeye izin verilmez. Çünkü anlık ödeme simüle edilir.
-            if (userIndexModel.products.Count == 0 && userIndexModel.user.Balance==0) // eğer en az bir ürün bile satılmış olursa balance 0 dan büyük
-                                                                                      // bir sayi olacaktir. Bu durumda bu bloğa girmez.
+            // görüntülemeye izin verilmez. Çünkü anlık ödeme simüle edilir.
+            if (userIndexModel.products.Count == 0 && userIndexModel.user.Balance == 0) // eğer en az bir ürün bile satılmış olursa balance 0 dan büyük
+                                                                                        // bir sayi olacaktir. Bu durumda bu bloğa girmez.
 
             {
                 ViewBag.isBalanceView = "no";
@@ -67,35 +67,35 @@ namespace WebUI.Controllers
 
             HttpContext.Session.SetString("id", userIndexModel.user.Id.ToString());
             HttpContext.Session.SetString("UserName", userIndexModel.user.UserName);
-            
+
 
 
             return View(userIndexModel);
         }
-     
-       
-        
+
+
+
         public IActionResult Profile()
         {
-         
+
             string tempId = HttpContext.Session.GetString("id");
             string tempUserName = HttpContext.Session.GetString("UserName");
             string tempActive = HttpContext.Session.GetString("Active");
-            bool isActive=Convert.ToBoolean(tempActive);
+            bool isActive = Convert.ToBoolean(tempActive);
             //UserProfileModel userProfileModel = new UserProfileModel();
             if (isActive == false)
             {
                 return RedirectToAction("Login", "IO");
             }
-            if (tempId==null || tempUserName==null  )
+            if (tempId == null || tempUserName == null)
             {
-                
+
                 return RedirectToAction("Login", "IO");
-             
+
             }
-           
-           
-           
+
+
+
             //userProfileModel.Id = Convert.ToInt32(tempId);
             //userProfileModel.UserName = tempUserName;
             return View(/*userProfileModel*/);
@@ -111,8 +111,8 @@ namespace WebUI.Controllers
             int userId = int.Parse(tempId);
 
             string tempUserName = HttpContext.Session.GetString("UserName");
-         
-            if (tempUserName==null)
+
+            if (tempUserName == null)
             {
                 return RedirectToAction("Login", "IO");
             }
@@ -120,15 +120,31 @@ namespace WebUI.Controllers
             {
                 return RedirectToAction("Login", "IO");
             }
-          Card userCard =   _cardService.GetByUserId(userId);
-
-          
+            Card userCard = _cardService.GetByUserId(userId);
 
 
-            User user = _userService.GetByUserName(tempUserName);
+
             UserHesapBilgilerimModel userHesapBilgilerimModel = new UserHesapBilgilerimModel();
+            User user = _userService.GetByUserName(tempUserName);
+            if (userCard == null)
+            {
+                userHesapBilgilerimModel.Active = false;
+                userHesapBilgilerimModel.CardInfos = new Card()
+                {
+                    CardName = "null",
+                    CardNumber = 0L,
+                    Cvv = 0,
+                    ExpirationMonth = 0,
+                    ExpirationYear = 0,
+                    Id = 0,
+                    UserId = 0
+                };
+                return View(userHesapBilgilerimModel);
+            }
+
             userHesapBilgilerimModel.User = user;
             userHesapBilgilerimModel.CardInfos = userCard;
+            //active true yapılabilir.
 
             return View(userHesapBilgilerimModel);
         }
@@ -145,11 +161,11 @@ namespace WebUI.Controllers
             }
 
 
-            string userName=HttpContext.Session.GetString("UserName");
-            User user=_userService.GetByUserName(userName);
+            string userName = HttpContext.Session.GetString("UserName");
+            User user = _userService.GetByUserName(userName);
             UserBakiyemModel userBakiyemModel = new UserBakiyemModel();
             userBakiyemModel.UserInfo = user;
-        
+
             return View(userBakiyemModel);
         }
         public IActionResult Search(string search)
@@ -162,11 +178,11 @@ namespace WebUI.Controllers
             string tempId = HttpContext.Session.GetString("id");
             int userId = int.Parse(tempId);
 
-            var searchResults =  _productService.Search(search, userId); // arama yaparken kendi ürünlerini getirmez.
+            var searchResults = _productService.Search(search, userId); // arama yaparken kendi ürünlerini getirmez.
 
             return View(searchResults);
         }
     }
 
-  
+
 }

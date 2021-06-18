@@ -5,44 +5,19 @@
 @section navbar{
     <partial name="_usernavbar" />
 }
-
-Sayın @Model.FirstName @Model.LastName Sipariş Faturanız
-
 <div class="row">
-    <div class="col-md-8">
-        <table class="table table-striped">
-            <tr>
-                <th>ürün Resmi</th>
-                <th>Ürün İsmi</th>
-                <th>Ürün Fiyatı</th>
-                <th>Açıklama</th>
-            </tr>
-            @foreach (var item in Model.BasketLists)
-            {
-               
-                <tr>
-                    <td>
-                        <img src="~/img/@item.Products.ImageUrl" width="140" height="140" />
-                    </td>
-                    <td>@item.Products.ProductName</td>
-                    <td> @item.Products.ProductPrice</td>
-                    <td>@item.Products.Description</td>
-                </tr>
-              
-            }
+    <div class="col-md-6 " style="text-align:center; margin-top:140px;">
+        <h4> Sayın @Model.FirstName @Model.LastName Sipariş Alınmıştır...</h4> <br />
+        <a  asp-action="Index" asp-controller="User" class="btn btn-lg btn-primary">Ana Sayfaya Dön</a>
+        <a asp-action="GetAll" asp-controller="Product" class="btn btn-lg btn-primary ml-4">Alışverişe Devam Et</a>
 
-        </table>
     </div>
+    <div class="col-md-6">
 
-    <div class="col-md-4">
-
-        <p>Numaranız : @Model.Phone</p>
-        <p> Şehir : @Model.City</p>
-        Kart Bilgileri
-<pre>
- @Model.CardDetails.CardName
-@Model.CardDetails.CardNumber   
-</pre>
+        <img src="~/img/send_email.png" width="660" height="560" />
     </div>
 </div>
+
+
+
 

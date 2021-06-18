@@ -1,0 +1,35 @@
+﻿
+
+@model List<Product>
+
+@{
+    ViewData["Title"] = "ErkekCantalari";
+}
+
+
+@section navbar{
+    <partial name="_usernavbar" />
+}
+
+
+
+
+
+<div class="row mt-4">
+    <partial name="_yanmenu" />
+    <div class="col-md-9">
+
+        @*<partial name="_slider" />*@
+
+        <div class="row mt-4">
+            @foreach (var product in Model)
+            {
+                <partial name="_allproduct" model="product" />
+            }
+        </div>
+
+    </div>
+</div>
+
+
+

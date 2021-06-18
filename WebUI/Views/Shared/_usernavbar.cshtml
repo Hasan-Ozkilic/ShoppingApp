@@ -7,10 +7,10 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active ml-5">
+                    <li class="nav-item active ml-4">
                         <a class="nav-link active" asp-action="Index" asp-controller="User" style="color:white !important">Ana Sayfa<span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item ">
+                    <li class="nav-item ml-4">
 
 
 
@@ -20,46 +20,52 @@
                }
                 Gelen Mesajlar <span class="badge badge-light">@b</span>
             </a>*@
-                        @await Component.InvokeAsync("GelenMesajlar");
+                        @await Component.InvokeAsync("GelenMesajlar")
 
 
 
 
                         @*<a class="nav-link" asp-action="GetAllByAlanId" asp-controller="Message" style="color:white !important">Gelen Mesajlar</a>*@
                     </li>
+                    <li class="nav-item ml-5">
+                        @await Component.InvokeAsync("GönderilenMesajlar")
+                    </li>
 
-                    @await Component.InvokeAsync("GönderilenMesajlar");
 
-
-                    <li class="nav-item" style="margin-left:80px">
+                    <li class="nav-item ml-5" >
                         <a class="nav-link btn btn-info text-white" asp-action="Listele" asp-controller="Basket">Sepetim</a>
                     </li>
-                    <li class="nav-item dropdown ml-5">
-                        <a class="nav-link dropdown-toggle" style="color:white !important" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Kategoriler
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" style="color:black !important;" asp-action="Bilgisayar" asp-controller="Category">Bilgisayar</a>
-                            <a class="dropdown-item" style="color:black !important" asp-action="Telefon" asp-controller="Category">Telefon</a>
-                            <a class="dropdown-item" style="color:black !important" asp-action="Giyim" asp-controller="Category">Giyim</a>
-                            <a class="dropdown-item" style="color:black !important" asp-action="Yiyecek" asp-controller="Category">Yiyecek</a>
-                        </div>
-                    </li>
+                    
+                    
 
-                    <li class="nav-item" style="margin-left:80px">
+                    @*<li class="nav-item dropdown ml-2">
+            <a class="nav-link dropdown-toggle" style="color:white !important" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Kategoriler
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+
+                <a class="dropdown-item" style="color:black !important;" asp-action="Bilgisayar" asp-controller="Category">Bilgisayar</a>
+                <a class="dropdown-item" style="color:black !important" asp-action="Telefon" asp-controller="Category">Telefon</a>
+                <a class="dropdown-item" style="color:black !important" asp-action="Giyim" asp-controller="Category">Giyim</a>
+                <a class="dropdown-item" style="color:black !important" asp-action="Yiyecek" asp-controller="Category">Yiyecek</a>
+            </div>
+        </li>*@
+
+                    <li class="nav-item" style="margin-left:60px">
                         <a class="nav-link btn btn-danger text-white" asp-action="GetAll" asp-controller="Product">Tüm Ürünler</a>
                     </li>
 
-                    <li class="nav-item" style="margin-left:80px">
+
+                    <li class="nav-item ml-5" >
                         <a class="nav-link btn btn-danger text-white" asp-controller="User" asp-action="Exit">Çıkış Yap</a>
                     </li>
 
                 </ul>
-                <form asp-action="Search" asp-controller="User"  method="get" class="form-inline my-2 my-lg-0">
+                <form asp-action="Search" asp-controller="User" method="get" class="form-inline my-2 my-lg-0">
                     <input name="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </div>
         </nav>
-
-
+  

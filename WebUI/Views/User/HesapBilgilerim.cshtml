@@ -8,8 +8,44 @@
     <partial name="_usernavbar" />
 }
 
-Kart Bilgileriniz 
-@Model.CardInfos.CardNumber
+
+<div class="row">
+    <div class="col-md-6" style="text-align:center ; margin-top: 80px; position:center center">
+
+        @if (Model.CardInfos.CardName== "null")
+        {
+            <h4>Henüz kart eklemediniz.</h4>
+
+        }
+        else
+        {
+
+            <h4>Kart Bilgilerim</h4>
+
+            <pre>
+            Kart İsmi =  @Model.CardInfos.CardName
+            Kart Numarası = @Model.CardInfos.CardNumber
+            Cvv  =   @Model.CardInfos.Cvv
+            Son Kullanma Tarihi = @Model.CardInfos.ExpirationMonth / @Model.CardInfos.ExpirationYear
+           </pre>
+
+
+
+            <a href="#" class="btn btn-lg btn-success mt-2">Kart Değiştir</a>
+            <a href="#" class="btn btn-lg btn-danger ml-2" >Kartı Sil</a>
+
+        }
+
+
+
+
+
+    </div>
+    <div class="col-md-6">
+        <img src="~/img/card.png" width="560" height="460" />
+
+    </div>
+</div>
 
 
 

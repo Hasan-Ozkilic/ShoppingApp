@@ -31,10 +31,20 @@
         display: inline-block;
     }
 
-    .ayakkabi-canta {
+    .ayakkabi {
         color: white;
         font: 400 15px'Open Sans';
         background-color: seagreen;
+        width: 50%;
+        padding: 1%;
+        text-align: center;
+        display: inline-block;
+    }
+
+    .canta {
+        color: white;
+        font: 400 15px'Open Sans';
+        background-color: blue;
         width: 50%;
         padding: 1%;
         text-align: center;
@@ -56,34 +66,45 @@
 
         <ul class="list-group">
 
-            <li class="list-group-item" style="width:320px;"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="1">Bilgisayar</a></li>
+            <li class="list-group-item"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="1">Bilgisayar</a></li>
             <li class="list-group-item"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="2">Telefon</a></li>
         </ul>
         <div class="moda toggle">
-            Moda
+            Giyim
 
         </div>
         <ul class="list-group">
-            <li class="list-group-item"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="3">Giyim</a></li>
-            <li class="list-group-item"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="4">Yiyecek</a></li>
+            <li class="list-group-item"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="3">Erkek Giyim</a></li>
+            <li class="list-group-item"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="4">Kadın Giyim</a></li>
+            <li class="list-group-item"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="5">Çocuk Giyim</a></li>
         </ul>
         <div class="saat-aksesuar toggle">
             Saat&amp;Aksesuar
 
         </div>
         <ul class="list-group">
-            <li class="list-group-item"><a asp-action="Giyim" asp-controller="Category">Takı&amp;Mücevher</a></li>
-            <li class="list-group-item"><a asp-action="Yiyecek" asp-controller="Category">Saat</a></li>
+            <li class="list-group-item"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="6">Takı&amp;Mücevher</a></li>
+            <li class="list-group-item"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="7">Saat</a></li>
         </ul>
-        <div class="ayakkabi-canta toggle">
-            Ayakkabı&amp;Çanta
+        <div class="ayakkabi toggle">
+            Ayakkabı
 
         </div>
         <ul class="list-group">
-            <li class="list-group-item"><a asp-action="Giyim" asp-controller="Category">Erkek Ayakkabısı</a></li>
-            <li class="list-group-item"><a asp-action="Yiyecek" asp-controller="Category">Kadın Ayakkabısı</a></li>
-            <li class="list-group-item"><a asp-action="Giyim" asp-controller="Category">Çanta</a></li>
-            <li class="list-group-item"><a asp-action="Yiyecek" asp-controller="Category">Çoçuk Çantası</a></li>
+            <li class="list-group-item"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="8">Erkek Ayakkabısı</a></li>
+            <li class="list-group-item"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="9">Kadın Ayakkabısı</a></li>
+
         </ul>
+        <div class="canta toggle">
+            Çanta
+
+        </div>
+        <ul class="list-group">
+
+            <li class="list-group-item"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="10">Kadın Çantaları</a></li>
+            <li class="list-group-item"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="11">Erkek Çantaları</a></li>
+            <li class="list-group-item"><a asp-action="GetByCategoryId" asp-controller="Favori" asp-route-id="12">Çoçuk Çantaları</a></li>
+        </ul>
+
     </div>
 </div>

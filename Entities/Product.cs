@@ -14,7 +14,7 @@ namespace Entities
         public string ImageUrl { get; set; }
         public int ProductPrice { get; set; }
         public string Description { get; set; }
-        public int UserOrderId { get; set; } // şimdilik kalsın ama sonradan silinmesi gerek.....
+        public int UserOrderId { get; set; } 
         public int UnitsInStock { get; set; }
     }
 }

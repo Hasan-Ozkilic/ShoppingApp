@@ -7,7 +7,7 @@
     <partial name="_usernavbar" />
 }
 
-<h4 style="color:red;">Favorilerin</h4>
+<h4 style="color:white; text-align:center; font-weight:bold; background-color:red; " class="mt-2">Favorilerin</h4>
 
 <div class="row mt-4">
     <partial name="_favoriyanmenu" />
@@ -16,10 +16,18 @@
         <partial name="_slider" />
 
         <div class="row mt-4">
-            @foreach (var product in Model)
+            @if (Model.Count == 0)
             {
-                <partial name="_favori" model="product" />
+                <h6 style="text-align:center;">Henüz favori ürün eklemediniz.</h6>
             }
+            else
+            {
+                @foreach (var product in Model)
+                {
+                    <partial name="_favori" model="product" />
+                }
+            }
+
         </div>
 
     </div>

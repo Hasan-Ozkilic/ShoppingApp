@@ -137,7 +137,7 @@ namespace WebUI.Controllers
             msg.Body = "Şifre sıfırlama bağlantısı : "+"https://localhost:44323/IO/PasswordVerify";
 
 
-            NetworkCredential info = new NetworkCredential("deneme232323232323@gmail.com", "FlyEmirates7+1a0424c3");
+            NetworkCredential info = new NetworkCredential("deneme232323232323@gmail.com", "sifreniz");
             client.Port = 587;
             client.Host = "smtp.gmail.com";
             client.EnableSsl = true;

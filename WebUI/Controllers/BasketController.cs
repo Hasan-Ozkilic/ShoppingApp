@@ -177,14 +177,18 @@ namespace WebUI.Controllers
             };
 
 
+
             return View(basketOrderModelDeneme);
 
-        }
+        } 
        
 
         public IActionResult OrderDetails(string id) // tüm idler gelir. basketidler
         {
-
+            if (id==null)
+            {
+                return RedirectToAction("Listele","Basket");
+            }
             HttpContext.Session.SetString("BasketIds", id);
             string tempId = HttpContext.Session.GetString("id");
             int userId = int.Parse(tempId);
@@ -409,7 +413,7 @@ namespace WebUI.Controllers
             HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
 
             #region Türkçe karakter sorunu için yazılması gereken kod bloğu.
-            /*  FontFactory.Register(Path.Combine("C:\\Windows\\Fonts\\Arial.ttf"), "Garamond"); */// kendi türkçe karakter desteği olan fontunuzu da girebilirsiniz.
+          // FontFactory.Register(Path.Combine("C:\\Windows\\Fonts\\Arial.ttf"), "Garamond"); /// kendi türkçe karakter desteği olan fontunuzu da girebilirsiniz.
             StyleSheet css = new StyleSheet();
             css.LoadTagStyle("body", "face", "Garamond");
             css.LoadTagStyle("body", "encoding", "Identity-H");

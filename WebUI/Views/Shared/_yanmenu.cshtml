@@ -31,10 +31,19 @@
         display: inline-block;
     }
 
-    .ayakkabi-canta {
+    .ayakkabi{
         color: white;
         font: 400 15px'Open Sans';
         background-color: seagreen;
+        width: 50%;
+        padding: 1%;
+        text-align: center;
+        display: inline-block;
+    }
+    .canta {
+        color: white;
+        font: 400 15px'Open Sans';
+        background-color: blue;
         width: 50%;
         padding: 1%;
         text-align: center;
@@ -60,12 +69,13 @@
             <li class="list-group-item"><a asp-action="Telefon" asp-controller="Category">Telefon</a></li>
         </ul>
         <div class="moda toggle">
-            Moda
+            Giyim
 
         </div>
         <ul class="list-group">
-            <li class="list-group-item"><a asp-action="Giyim" asp-controller="Category">Giyim</a></li>
-            <li class="list-group-item"><a asp-action="Yiyecek" asp-controller="Category">Yiyecek</a></li>
+            <li class="list-group-item"><a asp-action="ErkekGiyim" asp-controller="Category">Erkek Giyim</a></li>
+            <li class="list-group-item"><a asp-action="KadinGiyim" asp-controller="Category">Kadın Giyim</a></li>
+            <li class="list-group-item"><a asp-action="CocukGiyim" asp-controller="Category">Çocuk Giyim</a></li>
         </ul>
         <div class="saat-aksesuar toggle">
             Saat&amp;Aksesuar
@@ -75,15 +85,34 @@
             <li class="list-group-item"><a asp-action="TakiVeMucevher" asp-controller="Category">Takı&amp;Mücevher</a></li>
             <li class="list-group-item"><a asp-action="Saat" asp-controller="Category">Saat</a></li>
         </ul>
-        <div class="ayakkabi-canta toggle">
-            Ayakkabı&amp;Çanta
+        <div class="ayakkabi toggle">
+            Ayakkabı
 
         </div>
         <ul class="list-group">
             <li class="list-group-item"><a asp-action="ErkekAyakkabisi" asp-controller="Category">Erkek Ayakkabısı</a></li>
             <li class="list-group-item"><a asp-action="KadinAyakkabisi" asp-controller="Category">Kadın Ayakkabısı</a></li>
-            <li class="list-group-item"><a asp-action="Canta" asp-controller="Category">Çanta</a></li>
-            <li class="list-group-item"><a asp-action="CocukCantasi" asp-controller="Category">Çoçuk Çantası</a></li>
+           
         </ul>
+        <div class="canta toggle">
+            Çanta
+
+        </div>
+        <ul class="list-group">
+           
+            <li class="list-group-item"><a asp-action="KadinCantalari" asp-controller="Category">Kadın Çantaları</a></li>
+            <li class="list-group-item"><a asp-action="ErkekCantalari" asp-controller="Category">Erkek Çantaları</a></li>
+            <li class="list-group-item"><a asp-action="CocukCantalari" asp-controller="Category">Çoçuk Çantaları</a></li>
+        </ul>
+
     </div>
 </div>
+
+
+
+
+
+
+
+
+
