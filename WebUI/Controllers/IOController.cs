@@ -81,7 +81,7 @@ namespace WebUI.Controllers
 
                     return RedirectToAction("Check" , "IO");
                 }
-                if ("admin"==loginViewModel.LoginModel.UserName && loginViewModel.LoginModel.Password=="FlyEmirates7++++")
+                if ("admin"==loginViewModel.LoginModel.UserName && loginViewModel.LoginModel.Password=="sifreniz")
                 {
                     return RedirectToAction("Index", "Admin");
                 }
@@ -128,7 +128,7 @@ namespace WebUI.Controllers
 
             #region Mail Yollama
             SmtpClient client = new SmtpClient();
-            MailAddress from = new MailAddress("deneme232323232323@gmail.com", "ShoopingApp");
+            MailAddress from = new MailAddress("mail adresiniz", "ShoopingApp");
             string eMail = user.EMail;
             MailAddress to = new MailAddress(eMail);//bizim mail adresi
             MailMessage msg = new MailMessage(from, to);
@@ -137,7 +137,7 @@ namespace WebUI.Controllers
             msg.Body = "Şifre sıfırlama bağlantısı : "+"https://localhost:44323/IO/PasswordVerify";
 
 
-            NetworkCredential info = new NetworkCredential("deneme232323232323@gmail.com", "sifreniz");
+            NetworkCredential info = new NetworkCredential("mail adresiniz", "sifreniz");
             client.Port = 587;
             client.Host = "smtp.gmail.com";
             client.EnableSsl = true;
